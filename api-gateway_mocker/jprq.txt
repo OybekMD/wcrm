@@ -1,0 +1,4 @@
+jprq http 8080 -s wcrm
+
+//Run you localhost too as some time in another terminal
+make run

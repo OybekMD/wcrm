@@ -1,0 +1,37 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "Organic Avocado",
+            "description": "Fresh organic avocado, rich in healthy fats.",
+            "price": 3,
+            "picture": "https://example.com/avocado.jpg",
+            "category_id": 1,
+            "created_at": "2022-03-30T12:00:00Z",
+            "updated_at": "2022-03-30T12:00:00Z",
+            "deleted_at": null
+        },
+        {
+            "id": 2,
+            "title": "Grass-fed Beef",
+            "description": "Premium quality grass-fed beef, perfect for grilling.",
+            "price": 12,
+            "picture": "https://example.com/beef.jpg",
+            "category_id": 1,
+            "created_at": "2022-03-30T12:00:00Z",
+            "updated_at": "2022-03-30T12:00:00Z",
+            "deleted_at": null
+        },
+        {
+            "id": 3,
+            "title": "Organic Blueberries",
+            "description": "Fresh organic blueberries, packed with antioxidants.",
+            "price": 5,
+            "picture": "https://example.com/blueberries.jpg",
+            "category_id": 1,
+            "created_at": "2022-03-30T12:00:00Z",
+            "updated_at": "2022-03-30T12:00:00Z",
+            "deleted_at": null
+        }
+    ]
+}

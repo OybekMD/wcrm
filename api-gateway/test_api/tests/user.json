@@ -1,0 +1,16 @@
+{
+    "id": "f7d14b9d-6a18-4b11-bf7c-78eb810e8c7f",
+    "first_name": "John",
+    "last_name": "Doe",
+    "username": "johndoe",
+    "phone_number": "+1234567890",
+    "bio": "Software Engineer",
+    "birth_day": "1990-05-15",
+    "email": "john@example.com",
+    "avatar": "https://example.com/avatar.jpg",
+    "password": "hashed_password_here",
+    "refresh_token": "refresh_token_here",
+    "created_at": "2022-03-30T12:00:00Z",
+    "updated_at": "2022-03-30T12:00:00Z",
+    "deleted_at": null
+}

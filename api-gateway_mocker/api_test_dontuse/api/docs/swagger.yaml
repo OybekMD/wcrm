@@ -1,0 +1,515 @@
+definitions:
+  model.GetAllUserResponse:
+    properties:
+      count:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/model.User'
+        type: array
+    type: object
+  model.Item:
+    properties:
+      amount:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      updated_at:
+        type: string
+    type: object
+  model.ListItems:
+    properties:
+      count:
+        type: integer
+      products:
+        items:
+          $ref: '#/definitions/model.Item'
+        type: array
+    type: object
+  model.LogInResponse:
+    properties:
+      access_token:
+        type: string
+      message:
+        type: string
+    type: object
+  model.RegisterUserRequest:
+    properties:
+      age:
+        type: integer
+      code:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.RegisterUserResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  model.ResponseError:
+    properties:
+      code:
+        type: string
+      error: {}
+    type: object
+  model.Status:
+    properties:
+      success:
+        type: boolean
+    type: object
+  model.User:
+    properties:
+      age:
+        type: integer
+      code:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.UserModel:
+    properties:
+      access_token:
+        type: string
+      age:
+        type: integer
+      code:
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Pro Library Api
+  title: Welcome to Library service
+  version: "1.0"
+paths:
+  /v1/book/{page}/{limit}:
+    get:
+      consumes:
+      - application/json
+      description: get all Books
+      parameters:
+      - description: page
+        in: path
+        name: page
+        required: true
+        type: string
+      - description: limit
+        in: path
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.ListItems'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: get all Books
+      tags:
+      - Book
+  /v1/book/create:
+    post:
+      consumes:
+      - application/json
+      description: Insert a new Book with provided details
+      parameters:
+      - description: Create Book
+        in: body
+        name: BookDetails
+        required: true
+        schema:
+          $ref: '#/definitions/model.Item'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Item'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: create Book
+      tags:
+      - Book
+  /v1/book/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Book
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Status'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: delete Book
+      tags:
+      - Book
+  /v1/book/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get Book
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Item'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: get Book by id
+      tags:
+      - Book
+  /v1/book/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update ptoduct
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update Book
+        in: body
+        name: UserInfo
+        required: true
+        schema:
+          $ref: '#/definitions/model.Item'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Item'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: update Book
+      tags:
+      - Book
+  /v1/user/create:
+    post:
+      consumes:
+      - application/json
+      description: Api for creating Users
+      parameters:
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      security:
+      - BearerAuth: []
+      summary: Create User
+      tags:
+      - User
+  /v1/user/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Api for deleting Users
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.RegisterUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      security:
+      - BearerAuth: []
+      summary: Delete User
+      tags:
+      - User
+  /v1/user/getall/{page}/{limit}:
+    get:
+      consumes:
+      - application/json
+      description: Api to get all Users
+      parameters:
+      - description: page
+        in: path
+        name: page
+        required: true
+        type: string
+      - description: limit
+        in: path
+        name: limit
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetAllUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      security:
+      - BearerAuth: []
+      summary: Get All Users
+      tags:
+      - User
+  /v1/user/login/{email}/{password}:
+    post:
+      consumes:
+      - application/json
+      description: Api for Logging in
+      parameters:
+      - description: Email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: Password
+        in: path
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.LogInResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Log In User
+      tags:
+      - User
+  /v1/user/register:
+    post:
+      consumes:
+      - application/json
+      description: Api for Registering
+      parameters:
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.RegisterUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      summary: Register User
+      tags:
+      - User
+  /v1/user/update/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Api for updating Users
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.RegisterUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ResponseError'
+      security:
+      - BearerAuth: []
+      summary: Update User
+      tags:
+      - User
+  /v1/user/verify/{email}/{code}:
+    post:
+      consumes:
+      - application/json
+      description: Verify a user with code sent to their email
+      parameters:
+      - description: email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: code
+        in: path
+        name: code
+        required: true
+        type: string
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.UserModel'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: verify user
+      tags:
+      - User
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

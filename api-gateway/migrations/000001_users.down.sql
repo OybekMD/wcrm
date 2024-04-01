@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS orderproducts;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS categorys;
+DROP TABLE IF EXISTS category_icons;
+DROP TABLE IF EXISTS comments;

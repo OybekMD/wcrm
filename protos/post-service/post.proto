@@ -1,0 +1,96 @@
+syntax = "proto3";
+package post;
+
+option go_package = "/post";
+
+service PostService {
+  rpc CreateCategoryIcon (CategoryIcon) returns (CategoryIcon);
+  rpc ReadCategoryIcon (IdRequest) returns (CategoryIcon);
+  rpc UpdateCategoryIcon (CategoryIcon) returns (CategoryIcon);
+  rpc DeleteCategoryIcon (IdRequest) returns (MessageResponse);
+  rpc ListCategoryIcons (GetAllRequest) returns (ListCategoryIconResponse);
+
+  rpc CreateCategory (Category) returns (Category);
+  rpc ReadCategory (IdRequest) returns (Category);
+  rpc UpdateCategory (Category) returns (Category);
+  rpc DeleteCategory (IdRequest) returns (MessageResponse);
+  rpc ListCategorys (GetAllRequest) returns (ListCategoryResponse);
+
+  rpc CreateProduct (Product) returns (Product);
+  rpc ReadProduct (IdRequest) returns (Product);
+  rpc UpdateProduct (Product) returns (Product);
+  rpc DeleteProduct (IdRequest) returns (MessageResponse);
+  rpc ListProducts (GetAllRequest) returns (ListProductResponse);
+
+  rpc CreateOrderproduct (Orderproduct) returns (Orderproduct);
+  rpc ReadOrderproduct (IdRequest) returns (Orderproduct);
+  rpc UpdateOrderproduct (Orderproduct) returns (Orderproduct);
+  rpc DeleteOrderproduct (IdRequest) returns (MessageResponse);
+  rpc ListOrderproducts (GetAllRequest) returns (ListOrderproductResponse);
+}
+// -------------------------
+
+message CategoryIcon {
+  int64 id = 1;
+  string name = 2;
+  string picture = 3;
+}
+
+message Category {
+  int64 id = 1;
+  string name = 2;
+  int64 icon_id = 3;
+  string created_at = 4;
+  string updated_at = 5;
+  string deleted_at = 6;
+}
+
+message Product {
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+  int64 price = 4;
+  string picture = 5;
+  int64 category_id = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  string deleted_at = 9;
+}
+
+message Orderproduct {
+  int64 id = 1;
+  string user_id = 2;
+  int64 product_id = 3;
+  string created_at = 4;
+}
+
+// Standart requests
+message IdRequest {
+  string id = 1;
+}
+
+message MessageResponse {
+	string Message = 1;
+}
+
+// GetAll
+message GetAllRequest{
+  int64 page=1;
+  int64 limit=2;
+}
+
+message ListCategoryIconResponse{
+  repeated CategoryIcon categoryicons = 1;
+}
+
+message ListCategoryResponse{
+  repeated Category categorys = 1;
+}
+
+message ListProductResponse{
+  repeated Product products = 1;
+}
+
+message ListOrderproductResponse{
+  repeated Orderproduct orderproducts = 1;
+}

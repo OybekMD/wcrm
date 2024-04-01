@@ -1,0 +1,77 @@
+syntax = "proto3";
+package user;
+
+option go_package = "/user";
+
+service UserService {
+  rpc Login(LoginRequest) returns (User);
+  rpc GetFullName(LoginRequest) returns (User);
+  rpc CheckUnique(CheckUniqueRequest) returns (CheckUniqueRespons);
+  
+  rpc CreateUser(User) returns (User);
+  rpc ReadUser(IdRequest) returns (User);
+  rpc UpdateUser(User) returns (User);
+  rpc DeleteUser(IdRequest) returns (MessageResponse);
+  rpc ListUser(GetAllRequest) returns (ListUserResponse);
+  rpc UpdatePassword(UpdatePasswordRequest) returns (MessageResponse);
+}
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string username = 4;
+  string phone_number = 5;
+  string bio = 6;
+  string birth_day = 7;
+  string email = 8;
+  string avatar = 9;
+  string password = 10;
+  string refresh_token = 11;
+  string created_at = 12;
+  string updated_at = 13;
+  string deleted_at = 14;
+}
+
+
+message IdRequest {
+  string id = 1;
+}
+
+message StatisticRequest {
+  string id = 1;
+  string sdate = 2;
+}
+
+message LoginRequest {
+  string Email = 1;
+  string Password = 2;
+}
+
+message GetAllRequest{
+  int64 page=1;
+  int64 limit=2;
+}
+
+message UpdatePasswordRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message ListUserResponse{
+  repeated User users = 1 ;
+}
+
+message MessageResponse {
+	string Message = 1;
+}
+
+
+message CheckUniqueRespons{
+  bool is_exist = 1;
+}
+
+message CheckUniqueRequest{
+  string column = 1;
+  string value = 2;
+}

@@ -1,0 +1,50 @@
+syntax = "proto3";
+package comment;
+
+option go_package = "/comment";
+
+service CommentService {
+  rpc CreateComment (Comment) returns (Comment);
+  rpc ReadComment (IdRequest) returns (Comment);
+  rpc UpdateComment (Comment) returns (Comment);
+  rpc DeleteComment (IdRequest) returns (MessageResponse);
+  rpc ListComments (GetAllRequest) returns (ListCommentResponse);
+
+  rpc ListCommentsByProductId (ListPorductIdRequest) returns (ListCommentResponse);
+}
+// -------------------------
+message Comment {
+  int64 id = 1;
+  string content = 2;
+  string user_id = 3;
+  int64 product_id = 4;
+  string created_at = 5;
+  string updated_at = 6;
+  string deleted_at = 7;
+}
+
+// Standart requests
+message IdRequest {
+  string id = 1;
+}
+
+// To get ListCommentsByProductId
+message ListPorductIdRequest {
+  string id = 1;
+  int64 page=2;
+  int64 limit=3;
+}
+
+message MessageResponse {
+	string Message = 1;
+}
+
+// GetAll
+message GetAllRequest{
+  int64 page=1;
+  int64 limit=2;
+}
+
+message ListCommentResponse{
+  repeated Comment Comments = 1;
+}
