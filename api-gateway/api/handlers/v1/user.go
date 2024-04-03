@@ -16,6 +16,7 @@ import (
 
 // @Summary		CreateUser
 // @Description	Api for creating a new user
+// @Security    BearerAuth
 // @Tags		user
 // @Accept		json
 // @Produce		json
@@ -73,6 +74,7 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 //
 //	@Summary		GetUser
 //	@Description	Api for getting user by id
+// @Security    BearerAuth
 //	@Tags			user
 //	@Accept			json
 //	@Produce		json
@@ -107,6 +109,7 @@ func (h *handlerV1) ReadUser(c *gin.Context) {
 //
 // @Summary UpdateUser
 // @Description API for updating user by id
+// @Security    BearerAuth
 // @Tags user
 // @Accept json
 // @Produce json
@@ -151,6 +154,7 @@ func (h *handlerV1) UpdateUser(c *gin.Context) {
 //
 // @Summary DeleteUser
 // @Description API for deleting user by id
+// @Security    BearerAuth
 // @Tags user
 // @Accept json
 // @Produce json
@@ -185,12 +189,12 @@ func (h *handlerV1) DeleteUser(c *gin.Context) {
 // ListUsers returns list of users
 // @Summary ListUser
 // @Description Api returns list of users
+// @Security    BearerAuth
 // @Tags user
 // @Accept json
 // @Produce json
 // @Param page path int64 true "Page"
 // @Param limit path int64 true "Limit"
-// @Security ApiKeyAuth
 // @Succes 200 {object} models.Users
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel

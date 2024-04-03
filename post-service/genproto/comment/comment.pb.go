@@ -170,70 +170,6 @@ func (m *IdRequest) GetId() string {
 	return ""
 }
 
-// To get ListCommentsByProductId
-type ListPorductIdRequest struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=id,proto3" json:"id"`
-	Page                 int64    `protobuf:"varint,2,opt,name=page,proto3" json:"page"`
-	Limit                int64    `protobuf:"varint,3,opt,name=limit,proto3" json:"limit"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ListPorductIdRequest) Reset()         { *m = ListPorductIdRequest{} }
-func (m *ListPorductIdRequest) String() string { return proto.CompactTextString(m) }
-func (*ListPorductIdRequest) ProtoMessage()    {}
-func (*ListPorductIdRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_87262843ae6fd852, []int{2}
-}
-func (m *ListPorductIdRequest) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *ListPorductIdRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ListPorductIdRequest.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *ListPorductIdRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListPorductIdRequest.Merge(m, src)
-}
-func (m *ListPorductIdRequest) XXX_Size() int {
-	return m.Size()
-}
-func (m *ListPorductIdRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListPorductIdRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ListPorductIdRequest proto.InternalMessageInfo
-
-func (m *ListPorductIdRequest) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *ListPorductIdRequest) GetPage() int64 {
-	if m != nil {
-		return m.Page
-	}
-	return 0
-}
-
-func (m *ListPorductIdRequest) GetLimit() int64 {
-	if m != nil {
-		return m.Limit
-	}
-	return 0
-}
-
 type MessageResponse struct {
 	Message              string   `protobuf:"bytes,1,opt,name=Message,proto3" json:"Message"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -245,7 +181,7 @@ func (m *MessageResponse) Reset()         { *m = MessageResponse{} }
 func (m *MessageResponse) String() string { return proto.CompactTextString(m) }
 func (*MessageResponse) ProtoMessage()    {}
 func (*MessageResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_87262843ae6fd852, []int{3}
+	return fileDescriptor_87262843ae6fd852, []int{2}
 }
 func (m *MessageResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -294,7 +230,7 @@ func (m *GetAllRequest) Reset()         { *m = GetAllRequest{} }
 func (m *GetAllRequest) String() string { return proto.CompactTextString(m) }
 func (*GetAllRequest) ProtoMessage()    {}
 func (*GetAllRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_87262843ae6fd852, []int{4}
+	return fileDescriptor_87262843ae6fd852, []int{3}
 }
 func (m *GetAllRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -348,7 +284,7 @@ func (m *ListCommentResponse) Reset()         { *m = ListCommentResponse{} }
 func (m *ListCommentResponse) String() string { return proto.CompactTextString(m) }
 func (*ListCommentResponse) ProtoMessage()    {}
 func (*ListCommentResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_87262843ae6fd852, []int{5}
+	return fileDescriptor_87262843ae6fd852, []int{4}
 }
 func (m *ListCommentResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -387,7 +323,6 @@ func (m *ListCommentResponse) GetComments() []*Comment {
 func init() {
 	proto.RegisterType((*Comment)(nil), "comment.Comment")
 	proto.RegisterType((*IdRequest)(nil), "comment.IdRequest")
-	proto.RegisterType((*ListPorductIdRequest)(nil), "comment.ListPorductIdRequest")
 	proto.RegisterType((*MessageResponse)(nil), "comment.MessageResponse")
 	proto.RegisterType((*GetAllRequest)(nil), "comment.GetAllRequest")
 	proto.RegisterType((*ListCommentResponse)(nil), "comment.ListCommentResponse")
@@ -396,35 +331,33 @@ func init() {
 func init() { proto.RegisterFile("comment-service/comment.proto", fileDescriptor_87262843ae6fd852) }
 
 var fileDescriptor_87262843ae6fd852 = []byte{
-	// 437 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xdd, 0x8a, 0xd3, 0x40,
-	0x14, 0x76, 0x92, 0xdd, 0x66, 0x73, 0xd6, 0xac, 0x32, 0x2e, 0x6e, 0xa8, 0x6e, 0x28, 0xb9, 0x2a,
-	0xa8, 0x2b, 0x6c, 0xaf, 0xbc, 0xf0, 0xa2, 0xdb, 0x82, 0x14, 0x14, 0x4a, 0x44, 0x2f, 0xbc, 0x29,
-	0x31, 0x73, 0x28, 0x81, 0x34, 0x89, 0x99, 0x89, 0xe0, 0x3b, 0xf8, 0x00, 0x3e, 0x52, 0x2f, 0x7d,
-	0x04, 0xa9, 0x2f, 0x22, 0x99, 0x9f, 0x98, 0xfe, 0x58, 0xf0, 0x6e, 0xbe, 0xef, 0x3b, 0x3f, 0x73,
-	0xce, 0x37, 0x03, 0xd7, 0x49, 0xb1, 0x5a, 0x61, 0x2e, 0x5e, 0x70, 0xac, 0xbe, 0xa6, 0x09, 0xbe,
-	0xd4, 0xf8, 0xa6, 0xac, 0x0a, 0x51, 0x50, 0x47, 0xc3, 0x70, 0x4d, 0xc0, 0x99, 0xa8, 0x33, 0xbd,
-	0x00, 0x2b, 0x65, 0x3e, 0x19, 0x90, 0xa1, 0x1d, 0x59, 0x29, 0xa3, 0x3e, 0x38, 0x49, 0x91, 0x0b,
-	0xcc, 0x85, 0x6f, 0x0d, 0xc8, 0xd0, 0x8d, 0x0c, 0xa4, 0x57, 0xe0, 0xd4, 0x1c, 0xab, 0x45, 0xca,
-	0x7c, 0x5b, 0x2a, 0xbd, 0x06, 0xce, 0x18, 0xbd, 0x06, 0x28, 0xab, 0x82, 0xd5, 0x89, 0x68, 0xb4,
-	0x13, 0x59, 0xca, 0xd5, 0x8c, 0x92, 0x93, 0x0a, 0x63, 0x81, 0x6c, 0x11, 0x0b, 0xff, 0x54, 0xa6,
-	0xba, 0x9a, 0x19, 0x8b, 0x46, 0xae, 0x4b, 0x66, 0xe4, 0x9e, 0x92, 0x35, 0xa3, 0x64, 0x86, 0x19,
-	0x6a, 0xd9, 0x51, 0xb2, 0x66, 0xc6, 0x22, 0x7c, 0x02, 0xee, 0x8c, 0x45, 0xf8, 0xa5, 0x46, 0xde,
-	0x9d, 0xc5, 0x6d, 0x66, 0x09, 0xe7, 0x70, 0xf9, 0x36, 0xe5, 0x62, 0x5e, 0x54, 0xea, 0x2a, 0xff,
-	0x88, 0xa3, 0x14, 0x4e, 0xca, 0x78, 0x89, 0x72, 0x60, 0x3b, 0x92, 0x67, 0x7a, 0x09, 0xa7, 0x59,
-	0xba, 0x4a, 0x85, 0x9c, 0xd5, 0x8e, 0x14, 0x08, 0x9f, 0xc1, 0x83, 0x77, 0xc8, 0x79, 0xbc, 0xc4,
-	0x08, 0x79, 0x59, 0xe4, 0x1c, 0x9b, 0x85, 0x69, 0x4a, 0x57, 0x34, 0x30, 0x7c, 0x05, 0xde, 0x1b,
-	0x14, 0xe3, 0x2c, 0x33, 0x7d, 0x4d, 0x1f, 0x72, 0xa8, 0x8f, 0xd5, 0xed, 0x33, 0x81, 0x47, 0xcd,
-	0xcd, 0xb5, 0x49, 0x6d, 0xaf, 0xe7, 0x70, 0xa6, 0x29, 0xee, 0x93, 0x81, 0x3d, 0x3c, 0xbf, 0x7d,
-	0x78, 0x63, 0x3c, 0x36, 0xb1, 0x6d, 0xc4, 0xed, 0x77, 0x1b, 0x2e, 0x34, 0x78, 0xaf, 0x1e, 0x04,
-	0x1d, 0x81, 0x37, 0x91, 0x9b, 0x37, 0xf6, 0xef, 0xe5, 0xf7, 0xf7, 0x18, 0x3a, 0x82, 0xf3, 0x08,
-	0x63, 0x66, 0x20, 0x6d, 0x03, 0xda, 0x8d, 0x1e, 0x4c, 0xf2, 0x3e, 0x48, 0x13, 0xff, 0xa7, 0xd3,
-	0x6b, 0xf0, 0xa6, 0xd2, 0xda, 0x63, 0xbd, 0xfc, 0x96, 0xdb, 0xb5, 0x62, 0x0a, 0xf7, 0x3b, 0x5b,
-	0xe3, 0xf4, 0x71, 0x1b, 0xb9, 0xe5, 0x43, 0xff, 0x69, 0xcb, 0x1f, 0x5a, 0xf2, 0x47, 0xb8, 0xea,
-	0x56, 0xb9, 0xfb, 0x36, 0xff, 0xfb, 0x94, 0xb7, 0x12, 0x77, 0xdf, 0xd5, 0xf1, 0xba, 0x77, 0xfd,
-	0xf5, 0x26, 0x20, 0x3f, 0x37, 0x01, 0xf9, 0xb5, 0x09, 0xc8, 0x8f, 0xdf, 0xc1, 0xbd, 0x4f, 0x67,
-	0xe6, 0x83, 0x7e, 0xee, 0xc9, 0x1f, 0x3a, 0xfa, 0x13, 0x00, 0x00, 0xff, 0xff, 0x6d, 0xda, 0x80,
-	0x1e, 0xc2, 0x03, 0x00, 0x00,
+	// 407 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0xcb, 0xaa, 0xd3, 0x40,
+	0x18, 0x76, 0x9a, 0x73, 0x9a, 0x93, 0xbf, 0xa6, 0xca, 0x28, 0x36, 0x54, 0x1b, 0x4a, 0x56, 0x05,
+	0xb5, 0x42, 0xbb, 0x72, 0xe1, 0xa2, 0x17, 0x90, 0xa2, 0x82, 0x44, 0xdc, 0xb8, 0x29, 0x31, 0xf3,
+	0x23, 0x81, 0x34, 0x89, 0x99, 0x89, 0xe0, 0xd2, 0xb7, 0xf0, 0x91, 0xba, 0xf4, 0x11, 0xa4, 0xbe,
+	0x88, 0x64, 0x6e, 0x54, 0x5b, 0x0a, 0x67, 0x37, 0xdf, 0x65, 0xfe, 0xc9, 0x7c, 0x5f, 0x06, 0x46,
+	0x69, 0xb9, 0xdb, 0x61, 0x21, 0x9e, 0x73, 0xac, 0xbf, 0x65, 0x29, 0xbe, 0xd0, 0x78, 0x5a, 0xd5,
+	0xa5, 0x28, 0xa9, 0xab, 0x61, 0xb4, 0x27, 0xe0, 0xae, 0xd4, 0x9a, 0xf6, 0xa1, 0x93, 0xb1, 0x80,
+	0x8c, 0xc9, 0xc4, 0x89, 0x3b, 0x19, 0xa3, 0x01, 0xb8, 0x69, 0x59, 0x08, 0x2c, 0x44, 0xd0, 0x19,
+	0x93, 0x89, 0x17, 0x1b, 0x48, 0x07, 0xe0, 0x36, 0x1c, 0xeb, 0x6d, 0xc6, 0x02, 0x47, 0x2a, 0xdd,
+	0x16, 0x6e, 0x18, 0x1d, 0x01, 0x54, 0x75, 0xc9, 0x9a, 0x54, 0xb4, 0xda, 0x95, 0x1c, 0xe5, 0x69,
+	0x46, 0xc9, 0x69, 0x8d, 0x89, 0x40, 0xb6, 0x4d, 0x44, 0x70, 0x2d, 0xb7, 0x7a, 0x9a, 0x59, 0x88,
+	0x56, 0x6e, 0x2a, 0x66, 0xe4, 0xae, 0x92, 0x35, 0xa3, 0x64, 0x86, 0x39, 0x6a, 0xd9, 0x55, 0xb2,
+	0x66, 0x16, 0x22, 0x7a, 0x0c, 0xde, 0x86, 0xc5, 0xf8, 0xb5, 0x41, 0x7e, 0x7c, 0x17, 0xaf, 0xbd,
+	0x4b, 0xf4, 0x14, 0xee, 0xbd, 0x43, 0xce, 0x93, 0x2f, 0x18, 0x23, 0xaf, 0xca, 0x82, 0x63, 0x7b,
+	0x3d, 0x4d, 0x69, 0x9f, 0x81, 0xd1, 0x4b, 0xf0, 0x5f, 0xa3, 0x58, 0xe4, 0xb9, 0x99, 0x46, 0xe1,
+	0xaa, 0x32, 0x3e, 0x27, 0x96, 0x6b, 0xfa, 0x10, 0xae, 0xf3, 0x6c, 0x97, 0xa9, 0x6c, 0x9c, 0x58,
+	0x81, 0x68, 0x05, 0x0f, 0xde, 0x66, 0x5c, 0xe8, 0x48, 0xed, 0x59, 0xcf, 0xe0, 0x46, 0x53, 0x3c,
+	0x20, 0x63, 0x67, 0xd2, 0x9b, 0xdd, 0x9f, 0x9a, 0x46, 0x8c, 0xd7, 0x3a, 0x66, 0x3f, 0x1c, 0xe8,
+	0x6b, 0xf0, 0x41, 0xd5, 0x47, 0xe7, 0xe0, 0xaf, 0x64, 0x4e, 0xa6, 0xac, 0x93, 0xfd, 0xc3, 0x13,
+	0x86, 0xce, 0xa1, 0x17, 0x63, 0xc2, 0x0c, 0xa4, 0xd6, 0x60, 0x73, 0x3a, 0xbb, 0xc9, 0xff, 0x28,
+	0x23, 0xbf, 0xcd, 0x49, 0xaf, 0xc0, 0x5f, 0xcb, 0x22, 0x2e, 0x9d, 0x15, 0x58, 0xee, 0xff, 0x2a,
+	0xd6, 0x70, 0xf7, 0x28, 0x35, 0x4e, 0x1f, 0x59, 0xe7, 0x3f, 0x3d, 0x0c, 0x9f, 0x58, 0xfe, 0x5c,
+	0xc8, 0x6f, 0x60, 0x70, 0x3c, 0x65, 0xf9, 0xfd, 0xbd, 0xfd, 0xf1, 0xce, 0x7d, 0xce, 0xc5, 0x61,
+	0xcb, 0xe1, 0xfe, 0x10, 0x92, 0x5f, 0x87, 0x90, 0xfc, 0x3e, 0x84, 0xe4, 0xe7, 0x9f, 0xf0, 0xce,
+	0xa7, 0x1b, 0xf3, 0x86, 0x3e, 0x77, 0xe5, 0x23, 0x9a, 0xff, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xdd,
+	0x2c, 0x34, 0x8a, 0x65, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -444,7 +377,7 @@ type CommentServiceClient interface {
 	UpdateComment(ctx context.Context, in *Comment, opts ...grpc.CallOption) (*Comment, error)
 	DeleteComment(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*MessageResponse, error)
 	ListComments(ctx context.Context, in *GetAllRequest, opts ...grpc.CallOption) (*ListCommentResponse, error)
-	ListCommentsByProductId(ctx context.Context, in *ListPorductIdRequest, opts ...grpc.CallOption) (*ListCommentResponse, error)
+	ListCommentsByProductId(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*ListCommentResponse, error)
 }
 
 type commentServiceClient struct {
@@ -500,7 +433,7 @@ func (c *commentServiceClient) ListComments(ctx context.Context, in *GetAllReque
 	return out, nil
 }
 
-func (c *commentServiceClient) ListCommentsByProductId(ctx context.Context, in *ListPorductIdRequest, opts ...grpc.CallOption) (*ListCommentResponse, error) {
+func (c *commentServiceClient) ListCommentsByProductId(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*ListCommentResponse, error) {
 	out := new(ListCommentResponse)
 	err := c.cc.Invoke(ctx, "/comment.CommentService/ListCommentsByProductId", in, out, opts...)
 	if err != nil {
@@ -516,7 +449,7 @@ type CommentServiceServer interface {
 	UpdateComment(context.Context, *Comment) (*Comment, error)
 	DeleteComment(context.Context, *IdRequest) (*MessageResponse, error)
 	ListComments(context.Context, *GetAllRequest) (*ListCommentResponse, error)
-	ListCommentsByProductId(context.Context, *ListPorductIdRequest) (*ListCommentResponse, error)
+	ListCommentsByProductId(context.Context, *IdRequest) (*ListCommentResponse, error)
 }
 
 // UnimplementedCommentServiceServer can be embedded to have forward compatible implementations.
@@ -538,7 +471,7 @@ func (*UnimplementedCommentServiceServer) DeleteComment(ctx context.Context, req
 func (*UnimplementedCommentServiceServer) ListComments(ctx context.Context, req *GetAllRequest) (*ListCommentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListComments not implemented")
 }
-func (*UnimplementedCommentServiceServer) ListCommentsByProductId(ctx context.Context, req *ListPorductIdRequest) (*ListCommentResponse, error) {
+func (*UnimplementedCommentServiceServer) ListCommentsByProductId(ctx context.Context, req *IdRequest) (*ListCommentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCommentsByProductId not implemented")
 }
 
@@ -637,7 +570,7 @@ func _CommentService_ListComments_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _CommentService_ListCommentsByProductId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListPorductIdRequest)
+	in := new(IdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -649,7 +582,7 @@ func _CommentService_ListCommentsByProductId_Handler(srv interface{}, ctx contex
 		FullMethod: "/comment.CommentService/ListCommentsByProductId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommentServiceServer).ListCommentsByProductId(ctx, req.(*ListPorductIdRequest))
+		return srv.(CommentServiceServer).ListCommentsByProductId(ctx, req.(*IdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -782,50 +715,6 @@ func (m *IdRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Id) > 0 {
-		i -= len(m.Id)
-		copy(dAtA[i:], m.Id)
-		i = encodeVarintComment(dAtA, i, uint64(len(m.Id)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *ListPorductIdRequest) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ListPorductIdRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ListPorductIdRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Limit != 0 {
-		i = encodeVarintComment(dAtA, i, uint64(m.Limit))
-		i--
-		dAtA[i] = 0x18
-	}
-	if m.Page != 0 {
-		i = encodeVarintComment(dAtA, i, uint64(m.Page))
-		i--
-		dAtA[i] = 0x10
 	}
 	if len(m.Id) > 0 {
 		i -= len(m.Id)
@@ -1007,28 +896,6 @@ func (m *IdRequest) Size() (n int) {
 	l = len(m.Id)
 	if l > 0 {
 		n += 1 + l + sovComment(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *ListPorductIdRequest) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.Id)
-	if l > 0 {
-		n += 1 + l + sovComment(uint64(l))
-	}
-	if m.Page != 0 {
-		n += 1 + sovComment(uint64(m.Page))
-	}
-	if m.Limit != 0 {
-		n += 1 + sovComment(uint64(m.Limit))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1404,127 +1271,6 @@ func (m *IdRequest) Unmarshal(dAtA []byte) error {
 			}
 			m.Id = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipComment(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthComment
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ListPorductIdRequest) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowComment
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ListPorductIdRequest: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ListPorductIdRequest: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowComment
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthComment
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthComment
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Id = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Page", wireType)
-			}
-			m.Page = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowComment
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Page |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Limit", wireType)
-			}
-			m.Limit = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowComment
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Limit |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipComment(dAtA[iNdEx:])

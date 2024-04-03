@@ -1,4 +1,99 @@
 definitions:
+  models.Category:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      icon_id:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CategoryIcon:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      picture:
+        type: string
+    type: object
+  models.CategoryIconReq:
+    properties:
+      name:
+        type: string
+      picture:
+        type: string
+    type: object
+  models.CategoryIconUpdate:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      picture:
+        type: string
+    type: object
+  models.CategoryReq:
+    properties:
+      icon_id:
+        type: integer
+      name:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CategoryUpdate:
+    properties:
+      icon_id:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.Comment:
+    properties:
+      content:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      product_id:
+        type: integer
+      updated_at:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.CommentReq:
+    properties:
+      content:
+        type: string
+      product_id:
+        type: integer
+      user_id:
+        type: string
+    type: object
+  models.CommentUpdate:
+    properties:
+      content:
+        type: string
+      id:
+        type: integer
+    type: object
   models.CreateUserRoleRequest:
     properties:
       method:
@@ -26,27 +121,29 @@ definitions:
         type: string
       id:
         type: integer
-      picture_id:
+      product_id:
         type: integer
       user_id:
         type: string
     type: object
   models.OrderproductReq:
     properties:
-      picture_id:
+      product_id:
         type: integer
       user_id:
         type: string
     type: object
   models.OrderproductUpdate:
     properties:
-      picture_id:
+      product_id:
         type: integer
       user_id:
         type: string
     type: object
   models.Product:
     properties:
+      category_id:
+        type: integer
       created_at:
         type: string
       deleted_at:
@@ -55,6 +152,8 @@ definitions:
         type: string
       id:
         type: integer
+      picture:
+        type: string
       price:
         type: integer
       title:
@@ -64,7 +163,11 @@ definitions:
     type: object
   models.ProductReq:
     properties:
+      category_id:
+        type: integer
       description:
+        type: string
+      picture:
         type: string
       price:
         type: integer
@@ -73,8 +176,12 @@ definitions:
     type: object
   models.ProductUpdate:
     properties:
+      category_id:
+        type: integer
       description:
         type: string
+      id:
+        type: integer
       price:
         type: integer
       title:
@@ -125,14 +232,12 @@ definitions:
         type: string
       birth_day:
         type: string
-      coint:
-        type: integer
       created_at:
+        type: string
+      deleted_at:
         type: string
       email:
         type: string
-      experiience_level:
-        type: integer
       first_name:
         type: string
       id:
@@ -145,9 +250,7 @@ definitions:
         type: string
       refresh_token:
         type: string
-      score:
-        type: integer
-      updeted_at:
+      updated_at:
         type: string
       username:
         type: string
@@ -185,25 +288,25 @@ info:
   title: WCRM User
   version: "0.1"
 paths:
-  /v1/Orderproduct/:
+  /v1/category:
     post:
       consumes:
       - application/json
-      description: Api for creating a new Orderproduct
+      description: Api for creating a new Category
       parameters:
-      - description: Orderproduct information for creating a new Orderproduct
+      - description: Category information for creating a new Category
         in: body
-        name: Orderproduct
+        name: Category
         required: true
         schema:
-          $ref: '#/definitions/models.OrderproductReq'
+          $ref: '#/definitions/models.CategoryReq'
       produces:
       - application/json
       responses:
         "200":
-          description: Successfully created Orderproduct
+          description: Successfully created Category
           schema:
-            $ref: '#/definitions/models.Orderproduct'
+            $ref: '#/definitions/models.Category'
         "400":
           description: Bad request
           schema:
@@ -212,17 +315,19 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
-      summary: CreateOrderproduct
+      security:
+      - BearerAuth: []
+      summary: CreateCategory
       tags:
-      - Orderproduct
-  /v1/Orderproduct/:id:
+      - Category
+  /v1/category/:id:
     delete:
       consumes:
       - application/json
-      description: API for deleting Orderproduct by id
+      description: API for deleting Category by id
       parameters:
-      - description: Orderproduct ID
-        in: path
+      - description: Category ID
+        in: query
         name: id
         required: true
         type: string
@@ -232,7 +337,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Orderproduct'
+            $ref: '#/definitions/models.Category'
         "400":
           description: Bad Request
           schema:
@@ -241,16 +346,18 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
-      summary: DeleteOrderproduct
+      security:
+      - BearerAuth: []
+      summary: DeleteCategory
       tags:
-      - Orderproduct
+      - Category
     get:
       consumes:
       - application/json
-      description: Api for getting a Orderproduct by ID
+      description: Api for getting a Category by ID
       parameters:
-      - description: Orderproduct ID
-        in: path
+      - description: Category ID
+        in: query
         name: id
         required: true
         type: string
@@ -258,9 +365,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: Successfully retrieved Orderproduct
+          description: Successfully retrieved Category
           schema:
-            $ref: '#/definitions/models.Orderproduct'
+            $ref: '#/definitions/models.Category'
         "400":
           description: Bad request
           schema:
@@ -269,32 +376,29 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
-      summary: ReadOrderproduct
+      security:
+      - BearerAuth: []
+      summary: ReadCategory
       tags:
-      - Orderproduct
+      - Category
     put:
       consumes:
       - application/json
-      description: API for updating Orderproduct by id
+      description: API for updating Category by id
       parameters:
-      - description: Orderproduct ID
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: Orderproduct object to update
+      - description: Category object to update
         in: body
         name: body
         required: true
         schema:
-          $ref: '#/definitions/models.OrderproductUpdate'
+          $ref: '#/definitions/models.CategoryUpdate'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Orderproduct'
+            $ref: '#/definitions/models.Category'
         "400":
           description: Bad Request
           schema:
@@ -303,22 +407,148 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
-      summary: UpdateOrderproduct
+      security:
+      - BearerAuth: []
+      summary: UpdateCategory
       tags:
-      - Orderproduct
-  /v1/Orderproducts/:
+      - Category
+  /v1/categoryicon:
+    post:
+      consumes:
+      - application/json
+      description: Api for creating a new CategoryIcon
+      parameters:
+      - description: CategoryIcon information for creating a new CategoryIcon
+        in: body
+        name: CategoryIcon
+        required: true
+        schema:
+          $ref: '#/definitions/models.CategoryIconReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created CategoryIcon
+          schema:
+            $ref: '#/definitions/models.CategoryIcon'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: CreateCategoryIcon
+      tags:
+      - CategoryIcon
+  /v1/categoryicon/:id:
+    delete:
+      consumes:
+      - application/json
+      description: API for deleting CategoryIcon by id
+      parameters:
+      - description: CategoryIcon ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CategoryIcon'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: DeleteCategoryIcon
+      tags:
+      - CategoryIcon
     get:
       consumes:
       - application/json
-      description: Api returns list of Orderproducts
+      description: Api for getting a CategoryIcon by ID
+      parameters:
+      - description: CategoryIcon ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved CategoryIcon
+          schema:
+            $ref: '#/definitions/models.CategoryIcon'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ReadCategoryIcon
+      tags:
+      - CategoryIcon
+    put:
+      consumes:
+      - application/json
+      description: API for updating CategoryIcon by id
+      parameters:
+      - description: CategoryIcon object to update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.CategoryIconUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CategoryIcon'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: UpdateCategoryIcon
+      tags:
+      - CategoryIcon
+  /v1/categoryicons/:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of CategoryIcons
       parameters:
       - description: Page
-        in: path
+        in: query
         name: page
         required: true
         type: integer
       - description: Limit
-        in: path
+        in: query
         name: limit
         required: true
         type: integer
@@ -334,10 +564,225 @@ paths:
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
       security:
-      - ApiKeyAuth: []
-      summary: ListOrderproducts
+      - BearerAuth: []
+      summary: ListCategoryIcons
       tags:
-      - Orderproduct
+      - CategoryIcon
+  /v1/categorys/:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of Categorys
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ListCategorys
+      tags:
+      - Category
+  /v1/comment:
+    post:
+      consumes:
+      - application/json
+      description: Api for creating a new Comment
+      parameters:
+      - description: Comment information for creating a new Comment
+        in: body
+        name: Comment
+        required: true
+        schema:
+          $ref: '#/definitions/models.CommentReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created Comment
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: CreateComment
+      tags:
+      - Comment
+    put:
+      consumes:
+      - application/json
+      description: API for updating Comment by id
+      parameters:
+      - description: Comment object to update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.CommentUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: UpdateComment
+      tags:
+      - Comment
+  /v1/comment/:id:
+    delete:
+      consumes:
+      - application/json
+      description: API for deleting Comment by id
+      parameters:
+      - description: Comment ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: DeleteComment
+      tags:
+      - Comment
+    get:
+      consumes:
+      - application/json
+      description: Api for getting a Comment by ID
+      parameters:
+      - description: Comment ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved Comment
+          schema:
+            $ref: '#/definitions/models.Comment'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ReadComment
+      tags:
+      - Comment
+  /v1/comments/:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of Comments
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ListComments
+      tags:
+      - Comment
+  /v1/commentsbyproductid:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of Comments
+      parameters:
+      - description: Comment ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ListCommentsByProductId
+      tags:
+      - Comment
   /v1/imageupload:
     post:
       consumes:
@@ -369,6 +814,38 @@ paths:
       summary: File upload
       tags:
       - file-upload
+  /v1/listproductwithcomments:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of Products
+      parameters:
+      - description: Page
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: path
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ListProducts
+      tags:
+      - Product
   /v1/login:
     post:
       consumes:
@@ -399,6 +876,167 @@ paths:
       summary: Login User
       tags:
       - Register
+  /v1/orderproduct:
+    post:
+      consumes:
+      - application/json
+      description: Api for creating a new Orderproduct
+      parameters:
+      - description: Orderproduct information for creating a new Orderproduct
+        in: body
+        name: Orderproduct
+        required: true
+        schema:
+          $ref: '#/definitions/models.OrderproductReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created Orderproduct
+          schema:
+            $ref: '#/definitions/models.Orderproduct'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: CreateOrderproduct
+      tags:
+      - Orderproduct
+  /v1/orderproduct/:id:
+    delete:
+      consumes:
+      - application/json
+      description: API for deleting Orderproduct by id
+      parameters:
+      - description: Orderproduct ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Orderproduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: DeleteOrderproduct
+      tags:
+      - Orderproduct
+    get:
+      consumes:
+      - application/json
+      description: Api for getting a Orderproduct by ID
+      parameters:
+      - description: Orderproduct ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved Orderproduct
+          schema:
+            $ref: '#/definitions/models.Orderproduct'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ReadOrderproduct
+      tags:
+      - Orderproduct
+    put:
+      consumes:
+      - application/json
+      description: API for updating Orderproduct by id
+      parameters:
+      - description: Orderproduct ID
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Orderproduct object to update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.OrderproductUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Orderproduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: UpdateOrderproduct
+      tags:
+      - Orderproduct
+  /v1/orderproducts/:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of Orderproducts
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
+      summary: ListOrderproducts
+      tags:
+      - Orderproduct
   /v1/pdfupload:
     post:
       consumes:
@@ -430,7 +1068,7 @@ paths:
       summary: File upload
       tags:
       - file-upload
-  /v1/product/:
+  /v1/product:
     post:
       consumes:
       - application/json
@@ -457,6 +1095,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: CreateProduct
       tags:
       - Product
@@ -486,6 +1126,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: DeleteProduct
       tags:
       - Product
@@ -514,6 +1156,8 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: ReadProduct
       tags:
       - Product
@@ -548,6 +1192,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: UpdateProduct
       tags:
       - Product
@@ -579,7 +1225,7 @@ paths:
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: ListProducts
       tags:
       - Product
@@ -732,7 +1378,7 @@ paths:
       summary: ResetPassword User
       tags:
       - Register
-  /v1/Signup:
+  /v1/signup:
     post:
       consumes:
       - application/json
@@ -793,7 +1439,7 @@ paths:
       summary: File upload
       tags:
       - file-upload
-  /v1/user/:
+  /v1/user:
     post:
       consumes:
       - application/json
@@ -820,6 +1466,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: CreateUser
       tags:
       - user
@@ -830,7 +1478,7 @@ paths:
       description: API for deleting user by id
       parameters:
       - description: ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -849,6 +1497,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: DeleteUser
       tags:
       - user
@@ -858,7 +1508,7 @@ paths:
       description: Api for getting user by id
       parameters:
       - description: ID
-        in: path
+        in: query
         name: id
         required: true
         type: string
@@ -877,6 +1527,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: GetUser
       tags:
       - user
@@ -885,11 +1537,6 @@ paths:
       - application/json
       description: API for updating user by id
       parameters:
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
       - description: User object to update
         in: body
         name: body
@@ -911,6 +1558,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
+      security:
+      - BearerAuth: []
       summary: UpdateUser
       tags:
       - user
@@ -942,7 +1591,7 @@ paths:
           schema:
             $ref: '#/definitions/models.StandardErrorModel'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: ListUser
       tags:
       - user
@@ -1008,7 +1657,7 @@ paths:
       tags:
       - file-upload
 securityDefinitions:
-  ApiKeyAuth:
+  BearerAuth:
     in: header
     name: Authorization
     type: apiKey

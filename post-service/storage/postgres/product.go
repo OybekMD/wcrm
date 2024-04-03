@@ -209,3 +209,46 @@ func (r *postRepo) ListProductsDB(req *pbp.GetAllRequest) (*pbp.ListProductRespo
 	}
 	return &allProducts, nil
 }
+
+func (r *postRepo) ListProductsWithCommentsDB(req *pbp.GetAllRequest) (*pbp.ListProductWithCommentResponse, error) {
+	var allProducts pbp.ListProductWithCommentResponse
+	query := `
+        SELECT
+			id,
+			title,
+			description,
+			price,
+			picture,
+			category_id,
+			created_at,
+			updated_at
+        FROM 
+            products
+        WHERE
+            deleted_at IS NULL
+        LIMIT $1
+        OFFSET $2
+    `
+	offset := req.Limit * (req.Page - 1)
+	rows, err := r.db.Query(query, req.Limit, offset)
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var Product pbp.ProductWithComment
+		err := rows.Scan(
+			&Product.Id,
+			&Product.Title,
+			&Product.Description,
+			&Product.Price,
+			&Product.Picture,
+			&Product.CategoryId,
+			&Product.CreatedAt,
+			&Product.UpdatedAt)
+		if err != nil {
+			return nil, err
+		}
+		allProducts.Productwithcomments = append(allProducts.Productwithcomments, &Product)
+	}
+	return &allProducts, nil
+}

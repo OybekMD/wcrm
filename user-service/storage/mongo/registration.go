@@ -87,3 +87,27 @@ func (r *userMongoRepo) GetFullNameDB(req *pbu.LoginRequest) (*pbu.User, error) 
 
 	return &user, nil
 }
+
+func (r *userMongoRepo) IsAdminDB(req *pbu.IdRequest) (*pbu.CheckUniqueRespons, error) {
+	var res pbu.CheckUniqueRespons
+
+	collection := r.db.Database("your_database_name").Collection("admins")
+
+	filter := bson.M{
+		"email":      req.Id,
+		"deleted_at": nil,
+	}
+
+	var result bson.M
+	err := collection.FindOne(context.Background(), filter).Decode(&result)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			res.IsExist = false
+			return &res, nil
+		}
+		return nil, err
+	}
+
+	res.IsExist = true
+	return &res, nil
+}

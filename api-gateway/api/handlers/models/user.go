@@ -18,6 +18,7 @@ type User struct {
 	Email        string `json:"email"`
 	Avatar       string `json:"avatar"`
 	Password     string `json:"password"`
+	AccessToken  string `json:"access_token"`
 	RefreshToken string `json:"refresh_token"`
 	CreatedAt    string `json:"created_at"`
 	UpdatedAt    string `json:"updated_at"`

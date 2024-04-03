@@ -153,7 +153,7 @@ func (r *commentMongoRepo) ListCommentsDB(req *pbc.GetAllRequest) (*pbc.ListComm
 	return &allComments, nil
 }
 
-func (r *commentMongoRepo) ListCommentsByProductIdDB(req *pbc.ListPorductIdRequest) (*pbc.ListCommentResponse, error) {
+func (r *commentMongoRepo) ListCommentsByProductIdDB(req *pbc.IdRequest) (*pbc.ListCommentResponse, error) {
 	var allComments pbc.ListCommentResponse
 
 	collection := r.db.Database("your_database_name").Collection("comments")
@@ -163,9 +163,7 @@ func (r *commentMongoRepo) ListCommentsByProductIdDB(req *pbc.ListPorductIdReque
 		"deleted_at": nil,
 	}
 
-	options := options.Find().
-		SetLimit(int64(req.Limit)).
-		SetSkip(int64(req.Limit * (req.Page - 1)))
+	options := options.Find()
 
 	cursor, err := collection.Find(context.Background(), filter, options)
 	if err != nil {

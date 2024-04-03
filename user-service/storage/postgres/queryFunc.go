@@ -10,11 +10,9 @@ import (
 QueryBuildCreateUser constructs an SQL INSERT query and parameter list based on the provided User protobuf message for creating a new user.
 
 Parameters:
-
 	reqData pbu.User: A protobuf User message containing the data for creating a new user.
 
 Returns:
-
 	string: The generated SQL INSERT query.
 	[]interface{}: A slice of interface{} containing the parameters for the query.
 
@@ -26,7 +24,78 @@ Note:
 - It uses positional parameters in the SQL query to avoid SQL injection vulnerabilities.
 - The returned query includes placeholders for columns and values and does not execute the query directly.
 */
+
 func QueryBuildCreateUser(reqData pbu.User) (string, []interface{}) {
+	args := []interface{}{
+		reqData.Id,
+		reqData.FirstName,
+		reqData.LastName,
+	}
+	query := "INSERT INTO users(id, first_name, last_name"
+	count := 3
+	if reqData.Username != "" {
+		query += ", username"
+
+		args = append(args, reqData.Username)
+		count++
+	}
+	if reqData.PhoneNumber != "" {
+		query += ", phone_number"
+
+		args = append(args, reqData.PhoneNumber)
+		count++
+	}
+	if reqData.Bio != "" {
+		query += ", bio"
+
+		args = append(args, reqData.Bio)
+		count++
+	}
+	if reqData.BirthDay != "" {
+		query += ", birth_day"
+
+		args = append(args, reqData.BirthDay)
+		count++
+	}
+
+	query += ", email"
+
+	args = append(args, reqData.Email)
+	count++
+
+	if reqData.Avatar != "" {
+		query += ", avatar"
+
+		args = append(args, reqData.Avatar)
+		count++
+	}
+
+	query += ", password"
+
+	args = append(args, reqData.Password)
+	count++
+
+	query += ", refresh_token"
+	args = append(args, reqData.RefreshToken)
+	count++
+
+	query += ") VALUES ("
+	for i := 1; i <= count; i++ {
+		num := strconv.Itoa(i)
+		if i == count {
+			query = query + "$" + num + ")"
+		} else {
+			query = query + "$" + num + ", "
+		}
+	}
+	reply := " RETURNING id, first_name, last_name, username, phone_number, bio, birth_day, email, avatar, password, refresh_token, created_at, updated_at"
+	query += reply
+
+	return query, args
+}
+
+
+func OldQueryBuildCreateUser(reqData pbu.User) (string, []interface{}) {
 	args := []interface{}{
 		reqData.Id,
 		reqData.FirstName,
@@ -98,15 +167,16 @@ func QueryBuildCreateUser(reqData pbu.User) (string, []interface{}) {
 	return query, args
 }
 
+
+
+
 /*
 QueryBuildPatchUser constructs an SQL UPDATE query and parameter list based on the provided User protobuf message.
 
 Parameters:
-
 	req *pbu.User: A protobuf User message containing the data to update.
 
 Returns:
-
 	string: The generated SQL UPDATE query.
 	[]interface{}: A slice of interface{} containing the parameters for the query.
 	error: An error, if any occurred during the process.
@@ -128,7 +198,7 @@ func QueryBuildPatchUser(req *pbu.User) (string, []interface{}, error) {
 	step := 1
 	if req.FirstName != "" {
 		query += "first_name = $" + strconv.Itoa(step) + ", "
-		step++
+		step++	
 		args = append(args, req.FirstName)
 		updatedFields = true
 	}
@@ -192,6 +262,7 @@ func QueryBuildPatchUser(req *pbu.User) (string, []interface{}, error) {
 	}
 	query += "updated_at=CURRENT_TIMESTAMP WHERE id=$" + strconv.Itoa(step)
 	args = append(args, req.Id)
+
 
 	return query, args, nil
 }

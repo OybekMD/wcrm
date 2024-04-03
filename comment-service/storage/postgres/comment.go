@@ -2,6 +2,7 @@ package postgres
 
 import (
 	pbc "comment-service/genproto/comment"
+	"fmt"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -190,7 +191,7 @@ func (r *commentRepo) ListCommentsDB(req *pbc.GetAllRequest) (*pbc.ListCommentRe
 	return &allComments, nil
 }
 
-func (r *commentRepo) ListCommentsByProductIdDB(req *pbc.ListPorductIdRequest) (*pbc.ListCommentResponse, error) {
+func (r *commentRepo) ListCommentsByProductIdDB(req *pbc.IdRequest) (*pbc.ListCommentResponse, error) {
 	var allComments pbc.ListCommentResponse
 	query := `
         SELECT
@@ -203,14 +204,12 @@ func (r *commentRepo) ListCommentsByProductIdDB(req *pbc.ListPorductIdRequest) (
         FROM 
             comments
         WHERE
-			product_id = $1
+			product_id = $1 AND
             deleted_at IS NULL
-        LIMIT $2
-        OFFSET $3
     `
-	offset := req.Limit * (req.Page - 1)
-	rows, err := r.db.Query(query, req.Id, req.Limit, offset)
+	rows, err := r.db.Query(query, req.Id)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 

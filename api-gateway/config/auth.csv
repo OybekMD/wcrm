@@ -1,33 +1,71 @@
 p, unauthorized, /v1/swagger/*, GET
-p, unauthorized, /v1/jwtuser, GET
-p, unauthorized, /v1/jwtadmin, GET
 p, unauthorized, /v1/media/{file_name}, GET
-p, unauthorized, /v1/login, POST
-p, unauthorized, /v1/resetcheckpassword, POST
-p, unauthorized, /v1/resetpassword, POST
-p, unauthorized, /v1/Signup, POST
-p, unauthorized, /v1/verification, POST
 p, unauthorized, /media/*, GET
+p, unauthorized, /v1/login, POST
+p, unauthorized, /v1/verification, POST
+p, unauthorized, /v1/signup, POST
+p, unauthorized, /v1/resetpassword, POST
+p, unauthorized, /v1/resetcheckpassword, POST
 
-p, user, /v1/user/profile, GET
-p, user, /v1/user, PUT
+p, user, /v1/user, POST
+p, user, /v1/user/:id, GET
+p, user, /v1/user/:id, PUT
+p, user, /v1/user/:id, DELETE
+p, user, /v1/users, GET
 
+p, user, /v1/comment, POST
+p, user, /v1/comment/:id, GET
+p, user, /v1/comment/:id, PUT
+p, user, /v1/comment/:id, DELETE
+p, user, /v1/comments, GET
+p, user, /v1/commentsbyproductid, GET
+
+p, user, /v1/product/:id, GET
+p, user, /v1/products, GET
+
+p, admin, /v1/user, POST
+p, admin, /v1/user/:id, GET
+p, admin, /v1/user/:id, PUT
+p, admin, /v1/user/:id, DELETE
 p, admin, /v1/users, GET
-p, admin, /v1/users, GET
 
-p, admin, /v1/language, POST
-p, admin, /v1/language:id, GET
-p, admin, /v1/language:id, PUT
-p, admin, /v1/language:id, DELETE
-p, admin, /v1/languages, GET
+p, admin, /v1/categoryicon, POST
+p, admin, /v1/categoryicon/:id, GET
+p, admin, /v1/categoryicon/:id, PUT
+p, admin, /v1/categoryicon/:id, DELETE
+p, admin, /v1/categoryicons, GET
 
-p, admin, /v1/langlevel, POST
-p, admin, /v1/langlevel:id, GET
-p, admin, /v1/langlevel:id, PUT
-p, admin, /v1/langlevel:id, DELETE
-p, admin, /v1/langlevels, GET
+p, admin, /v1/category, POST
+p, admin, /v1/category/:id, GET
+p, admin, /v1/category/:id, PUT
+p, admin, /v1/category/:id, DELETE
+p, admin, /v1/categorys, GET
+
+p, admin, /v1/product, POST
+p, admin, /v1/product/:id, GET
+p, admin, /v1/product/:id, PUT
+p, admin, /v1/product/:id, DELETE
+p, admin, /v1/products, GET
+p, admin, /v1/listproductwithcomments, GET
 
 
+p, admin, /v1/orderproduct, POST
+p, admin, /v1/orderproduct/:id, GET
+p, admin, /v1/orderproduct/:id, PUT
+p, admin, /v1/orderproduct/:id, DELETE
+p, admin, /v1/orderproducts, GET
 
-p, superAdmin, /v1/post, (GET)|(POST)|(DELETE)|(PUT)
+p, admin, /v1/comment, POST
+p, admin, /v1/comment/:id, GET
+p, admin, /v1/comment/:id, PUT
+p, admin, /v1/comment/:id, DELETE
+p, admin, /v1/comments, GET
+p, admin, /v1/commentsbyproductid, GET
+
+p, admin, /v1/pdfupload, POST
+p, admin, /v1/imageupload, POST
+p, admin, /v1/soundupload, POST
+p, admin, /v1/videoupload, POST
+
+p, superAdmin, /v1/*, (GET)|(POST)|(DELETE)|(PUT)
 g, superAdmin, admin,

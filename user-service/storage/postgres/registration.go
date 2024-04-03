@@ -2,9 +2,11 @@ package postgres
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"log"
 	pbu "user-service/genproto/user"
+	"user-service/pkg/etc"
 )
 
 func (r *userRepo) LoginDB(req *pbu.LoginRequest) (*pbu.User, error) {
@@ -25,7 +27,7 @@ func (r *userRepo) LoginDB(req *pbu.LoginRequest) (*pbu.User, error) {
 		password,
 		refresh_token,
 		created_at,
-		updeted_at
+		updated_at
 	FROM 
 		users
 	WHERE
@@ -38,6 +40,7 @@ func (r *userRepo) LoginDB(req *pbu.LoginRequest) (*pbu.User, error) {
 		&user.FirstName,
 		&user.LastName,
 		&nulluname,
+		&nullphonenumber,
 		&nullBio,
 		&nullbday,
 		&user.Email,
@@ -64,7 +67,10 @@ func (r *userRepo) LoginDB(req *pbu.LoginRequest) (*pbu.User, error) {
 	if nullAva.Valid {
 		user.Avatar = nullAva.String
 	}
-	return &user, nil
+	if etc.CheckPasswordHash(req.Password, user.Password) {
+		return &user, nil
+	}
+	return nil, errors.New("password is not correct")
 }
 
 func (r *userRepo) CheckUniqueDB(req *pbu.CheckUniqueRequest) (*pbu.CheckUniqueRespons, error) {
@@ -92,7 +98,7 @@ func (r *userRepo) UpdatePasswordDB(req *pbu.UpdatePasswordRequest) (*pbu.Messag
 		UPDATE
 			users
 		SET
-			password_hash=$1
+			password=$1
 		WHERE
 			email=$2
 		`
@@ -130,4 +136,36 @@ func (r *userRepo) GetFullNameDB(req *pbu.LoginRequest) (*pbu.User, error) {
 	}
 
 	return &user, nil
+}
+
+func (r *userRepo) IsAdminDB(req *pbu.IdRequest) (*pbu.CheckUniqueRespons, error) {
+	var res pbu.CheckUniqueRespons
+	query := `
+	SELECT
+		id
+	FROM 
+		admins
+	WHERE
+		email=$1
+	AND deleted_at IS NULL
+	`
+
+	result, err := r.db.Exec(query, req.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return nil, err
+	}
+
+	if rowsAffected == 0 {
+		// No rows were affected, indicating that the record was not found
+		res.IsExist = false
+	} else {
+		res.IsExist = true
+	}
+
+	return &res, nil
 }

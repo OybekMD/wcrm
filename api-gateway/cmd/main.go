@@ -19,21 +19,6 @@ func main() {
 		log.Error("gRPC dial error", logger.Error(err))
 	}
 
-	// With db
-	/*psqlString := fmt.Sprintf(`host=%s port=%d user=%s password=%s dbname=%s sslmode=disable`, "localhost", 5432, "postgres", "ebot", "auserdb")
-
-	db, err := gormadapter.NewAdapter("postgres", psqlString, true)/
-	if err != nil {
-		log.Error("gormadapter error", logger.Error(err))
-		return
-	}
-
-	enforcer, err := casbin.NewEnforcer("./config/auth.conf", db)
-	if err != nil {
-		log.Error("NewEnforcer error", logger.Error(err))
-		return
-	}*/
-
 	// With csv file code 
 	fileAdapter := fileadapter.NewAdapter("./config/auth.csv")
 

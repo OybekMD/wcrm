@@ -9,6 +9,7 @@ type UserStorageI interface {
 	LoginDB(*pbu.LoginRequest) (*pbu.User, error)
 	CheckUniqueDB(req *pbu.CheckUniqueRequest) (*pbu.CheckUniqueRespons, error)
 	GetFullNameDB(req *pbu.LoginRequest) (*pbu.User, error)
+	IsAdminDB(req *pbu.IdRequest) (*pbu.CheckUniqueRespons, error)
 
 	CreateUserDB(*pbu.User) (*pbu.User, error)
 	ReadUserDB(*pbu.IdRequest) (*pbu.User, error)

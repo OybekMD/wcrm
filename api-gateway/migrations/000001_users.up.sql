@@ -59,3 +59,13 @@ CREATE TABLE comments (
     deleted_at TIMESTAMP DEFAULT NULL
 );
 
+CREATE TABLE admins (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(40),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP DEFAULT NULL
+);
+
+
+

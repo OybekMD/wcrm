@@ -75,7 +75,7 @@ func (s *CommentService) ListComments(ctx context.Context, req *pbc.GetAllReques
 	return comments, nil
 }
 
-func (s *CommentService) ListCommentsByProductId(ctx context.Context, req *pbc.ListPorductIdRequest) (*pbc.ListCommentResponse, error) {
+func (s *CommentService) ListCommentsByProductId(ctx context.Context, req *pbc.IdRequest) (*pbc.ListCommentResponse, error) {
 	comments, err := s.storage.Comment().ListCommentsByProductIdDB(req)
 	if err != nil {
 		return nil, err

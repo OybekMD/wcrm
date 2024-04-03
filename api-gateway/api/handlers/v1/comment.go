@@ -17,6 +17,7 @@ import (
 // Comment
 // @Summary     CreateComment
 // @Description Api for creating a new Comment
+// @Security    BearerAuth
 // @Tags        Comment
 // @Accept      json
 // @Produce     json
@@ -62,6 +63,7 @@ func (h *handlerV1) CreateComment(c *gin.Context) {
 
 // @Summary     ReadComment
 // @Description Api for getting a Comment by ID
+// @Security    BearerAuth
 // @Tags        Comment
 // @Accept      json
 // @Produce     json
@@ -94,6 +96,7 @@ func (h *handlerV1) ReadComment(c *gin.Context) {
 
 // @Summary UpdateComment
 // @Description API for updating Comment by id
+// @Security    BearerAuth
 // @Tags Comment
 // @Accept json
 // @Produce json
@@ -138,6 +141,7 @@ func (h *handlerV1) UpdateComment(c *gin.Context) {
 
 // @Summary DeleteComment
 // @Description API for deleting Comment by id
+// @Security    BearerAuth
 // @Tags Comment
 // @Accept json
 // @Produce json
@@ -171,12 +175,12 @@ func (h *handlerV1) DeleteComment(c *gin.Context) {
 // ListComments returns list of Comments
 // @Summary ListComments
 // @Description Api returns list of Comments
+// @Security    BearerAuth
 // @Tags Comment
 // @Accept json
 // @Produce json
 // @Param page query int64 true "Page"
 // @Param limit query int64 true "Limit"
-// @Security ApiKeyAuth
 // @Succes 200 {object} models.Comment
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
@@ -204,6 +208,39 @@ func (h *handlerV1) ListComments(c *gin.Context) {
 		ctx, &pbc.GetAllRequest{
 			Limit: params.Limit,
 			Page:  params.Page,
+		})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to list Comment", l.Error(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, response)
+}
+
+// ListCommentsByProductId returns list of Comments
+// @Summary ListCommentsByProductId
+// @Description Api returns list of Comments
+// @Security    BearerAuth
+// @Tags Comment
+// @Accept json
+// @Produce json
+// @Param id query string true "Comment ID"
+// @Succes 200 {object} models.Comment
+// @Failure 400 {object} models.StandardErrorModel
+// @Failure 500 {object} models.StandardErrorModel
+// @Router /v1/commentsbyproductid [get]
+func (h *handlerV1) ListCommentsByProductId(c *gin.Context) {
+	id := c.Query("id")
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+
+	response, err := h.serviceManager.CommentService().ListCommentsByProductId(
+		ctx, &pbc.IdRequest{
+			Id: id,
 		})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

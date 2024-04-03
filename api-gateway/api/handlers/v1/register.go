@@ -56,9 +56,9 @@ func (h *handlerV1) Signup(c *gin.Context) {
 		return
 	}
 
-	response, err := h.serviceManager.UserService().CheckField(
-		ctx, &pbu.CheckUser{
-			Field: "email",
+	response, err := h.serviceManager.UserService().CheckUnique(
+		ctx, &pbu.CheckUniqueRequest{
+			Column: "email",
 			Value: body.Email,
 		})
 	if err != nil {
@@ -68,7 +68,7 @@ func (h *handlerV1) Signup(c *gin.Context) {
 		h.log.Error(err.Error())
 		return
 	}
-	if response.Exists {
+	if response.IsExist {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Email already use",
 		})
@@ -118,6 +118,7 @@ func (h *handlerV1) Login(c *gin.Context) {
 		h.log.Error(err.Error())
 		return
 	}
+	
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
@@ -126,19 +127,47 @@ func (h *handlerV1) Login(c *gin.Context) {
 		Email:    body.Email,
 		Password: body.Password,
 	})
-
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "User not found!"})
 		h.log.Error(err.Error())
 		return
 	}
 
-	// Handle login validation logic here...
+	isAdmin, err := h.serviceManager.UserService().IsAdmin(ctx, &pbu.IdRequest{
+		Id: body.Email,
+	})
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Email or Password wrong!"})
+		h.log.Error(err.Error())
+		return
+	}
 
-	// Generate JWT tokens and respond
-	// (Your existing code for generating tokens and responding)
+	if isAdmin.IsExist {
+		h.jwthandler = token.JWTHandler{
+			Sub:       body.Email,
+			Iss:       cast.ToString(time.Now().Unix()), //gived time token genereted time
+			Role:      "admin",
+			SigninKey: h.cfg.SignInKey,
+			Timeout:   h.cfg.AccessTokenTimeout,
+		}
+	} else {
+		h.jwthandler = token.JWTHandler{
+			Sub:       body.Email,
+			Iss:       cast.ToString(time.Now().Unix()), //gived time token genereted time
+			Role:      "user",
+			SigninKey: h.cfg.SignInKey,
+			Timeout:   h.cfg.AccessTokenTimeout,
+		}
+	}
 
-	c.JSON(http.StatusOK, responseUser)
+	access, _, err := h.jwthandler.GenerateAuthJWT()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "Error generating token")
+		return
+	}
+	res := models.ParseStructLogin(responseUser, access)
+
+	c.JSON(http.StatusOK, res)
 }
 
 // Verification
@@ -157,6 +186,8 @@ func (h *handlerV1) Verification(c *gin.Context) {
 		body        models.Verify
 		jspbMarshal protojson.MarshalOptions
 	)
+
+	
 	jspbMarshal.UseProtoNames = true
 	err := c.ShouldBindJSON(&body)
 	if err != nil {
@@ -273,9 +304,9 @@ func (h *handlerV1) ResetPassword(c *gin.Context) {
 	defer cancel()
 
 	// Check user isExist in db
-	response, err := h.serviceManager.UserService().CheckField(
-		ctx, &pbu.CheckUser{
-			Field: "email",
+	response, err := h.serviceManager.UserService().CheckUnique(
+		ctx, &pbu.CheckUniqueRequest{
+			Column: "email",
 			Value: body.Email,
 		})
 	if err != nil {
@@ -288,7 +319,7 @@ func (h *handlerV1) ResetPassword(c *gin.Context) {
 	fmt.Println(body.Email)
 	fmt.Println(response)
 
-	if !response.Exists {
+	if !response.IsExist {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Email is not exist!",
 		})

@@ -1,7 +1,7 @@
 package tests
 
 import (
-	kv2 "api-gateway/test_api/storage/kv"
+	kv2 "api-gateway/api_test/storage/kv"
 	"bytes"
 	"io"
 	"net/http"

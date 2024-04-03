@@ -28,7 +28,7 @@ type Option struct {
 
 // @title WCRM User
 // @version 0.1
-// @securityDefinitions.apikey ApiKeyAuth
+// @securityDefinitions.apikey BearerAuth
 // @in header
 // @name Authorization
 func New(option Option) *gin.Engine {
@@ -61,7 +61,7 @@ func New(option Option) *gin.Engine {
 
 	// Registration
 	api.POST("/login", handlerV1.Login)
-	api.POST("/signin", handlerV1.Signup)
+	api.POST("/signup", handlerV1.Signup)
 	api.POST("/verification", handlerV1.Verification)
 	api.POST("/resetpassword", handlerV1.ResetPassword)
 	api.POST("/resetcheckpassword", handlerV1.ResetCheckPassword)
@@ -78,7 +78,7 @@ func New(option Option) *gin.Engine {
 	api.GET("/categoryicon/:id", handlerV1.ReadCategory)
 	api.PUT("/categoryicon/:id", handlerV1.UpdateCategory)
 	api.DELETE("/categoryicon/:id", handlerV1.DeleteCategory)
-	api.GET("/categorys", handlerV1.ListCategorys)
+	api.GET("/categoryicons", handlerV1.ListCategorys)
 
 	// Category
 	api.POST("/category", handlerV1.CreateCategory)
@@ -93,6 +93,7 @@ func New(option Option) *gin.Engine {
 	api.PUT("/product/:id", handlerV1.UpdateProduct)
 	api.DELETE("/product/:id", handlerV1.DeleteProduct)
 	api.GET("/products", handlerV1.ListProducts)
+	api.GET("/listproductwithcomments", handlerV1.ListProductWithComment)
 
 	// Orderproduct Not yet
 	api.POST("/orderproduct", handlerV1.CreateOrderproduct)
@@ -107,6 +108,7 @@ func New(option Option) *gin.Engine {
 	api.PUT("/comment/:id", handlerV1.UpdateProduct)
 	api.DELETE("/comment/:id", handlerV1.DeleteProduct)
 	api.GET("/comments", handlerV1.ListProducts)
+	api.GET("/commentsbyproductid", handlerV1.ListCommentsByProductId)
 
 	// Fileup
 	api.POST("/pdfupload", handlerV1.UploadPDFFile)

@@ -17,6 +17,7 @@ import (
 // Category
 // @Summary     CreateCategory
 // @Description Api for creating a new Category
+// @Security    BearerAuth
 // @Tags        Category
 // @Accept      json
 // @Produce     json
@@ -61,6 +62,7 @@ func (h *handlerV1) CreateCategory(c *gin.Context) {
 
 // @Summary     ReadCategory
 // @Description Api for getting a Category by ID
+// @Security    BearerAuth
 // @Tags        Category
 // @Accept      json
 // @Produce     json
@@ -93,6 +95,7 @@ func (h *handlerV1) ReadCategory(c *gin.Context) {
 
 // @Summary UpdateCategory
 // @Description API for updating Category by id
+// @Security    BearerAuth
 // @Tags Category
 // @Accept json
 // @Produce json
@@ -134,6 +137,7 @@ func (h *handlerV1) UpdateCategory(c *gin.Context) {
 
 // @Summary DeleteCategory
 // @Description API for deleting Category by id
+// @Security    BearerAuth
 // @Tags Category
 // @Accept json
 // @Produce json
@@ -167,12 +171,12 @@ func (h *handlerV1) DeleteCategory(c *gin.Context) {
 // ListCategorys returns list of Categorys
 // @Summary ListCategorys
 // @Description Api returns list of Categorys
+// @Security    BearerAuth
 // @Tags Category
 // @Accept json
 // @Produce json
 // @Param page query int64 true "Page"
 // @Param limit query int64 true "Limit"
-// @Security ApiKeyAuth
 // @Succes 200 {object} models.Category
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel

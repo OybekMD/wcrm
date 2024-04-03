@@ -12,5 +12,5 @@ type CommentStorageI interface {
 	DeleteCommentDB(*pbc.IdRequest) (*pbc.MessageResponse, error)
 	ListCommentsDB(*pbc.GetAllRequest) (*pbc.ListCommentResponse, error)
 
-	ListCommentsByProductIdDB(*pbc.ListPorductIdRequest) (*pbc.ListCommentResponse, error)
+	ListCommentsByProductIdDB(*pbc.IdRequest) (*pbc.ListCommentResponse, error)
 }

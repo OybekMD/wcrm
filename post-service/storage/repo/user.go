@@ -23,6 +23,7 @@ type PostStorageI interface {
 	UpdateProductDB(*pbc.Product) (*pbc.Product, error)
 	DeleteProductDB(*pbc.IdRequest) (*pbc.MessageResponse, error)
 	ListProductsDB(*pbc.GetAllRequest) (*pbc.ListProductResponse, error)
+	ListProductsWithCommentsDB(*pbc.GetAllRequest) (*pbc.ListProductWithCommentResponse, error)
 
 	CreateOrderproductDB(*pbc.Orderproduct) (*pbc.Orderproduct, error)
 	ReadOrderproductDB(*pbc.IdRequest) (*pbc.Orderproduct, error)

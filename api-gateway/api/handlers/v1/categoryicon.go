@@ -17,6 +17,7 @@ import (
 // CategoryIcon
 // @Summary     CreateCategoryIcon
 // @Description Api for creating a new CategoryIcon
+// @Security    BearerAuth
 // @Tags        CategoryIcon
 // @Accept      json
 // @Produce     json
@@ -24,7 +25,7 @@ import (
 // @Success     200 {object} models.CategoryIcon "Successfully created CategoryIcon"
 // @Failure     400 {object} models.StandardErrorModel "Bad request"
 // @Failure     500 {object} models.StandardErrorModel "Internal server error"
-// @Router      /v1/categoryIcon [post]
+// @Router      /v1/categoryicon [post]
 func (h *handlerV1) CreateCategoryIcon(c *gin.Context) {
 	var (
 		body        models.CategoryIcon
@@ -61,6 +62,7 @@ func (h *handlerV1) CreateCategoryIcon(c *gin.Context) {
 
 // @Summary     ReadCategoryIcon
 // @Description Api for getting a CategoryIcon by ID
+// @Security    BearerAuth
 // @Tags        CategoryIcon
 // @Accept      json
 // @Produce     json
@@ -68,7 +70,7 @@ func (h *handlerV1) CreateCategoryIcon(c *gin.Context) {
 // @Success     200 {object} models.CategoryIcon "Successfully retrieved CategoryIcon"
 // @Failure     400 {object} models.StandardErrorModel "Bad request"
 // @Failure     500 {object} models.StandardErrorModel "Internal server error"
-// @Router      /v1/categoryIcon/:id [get]
+// @Router      /v1/categoryicon/:id [get]
 func (h *handlerV1) ReadCategoryIcon(c *gin.Context) {
 	var jspbMarshal protojson.MarshalOptions
 	jspbMarshal.UseProtoNames = true
@@ -93,6 +95,7 @@ func (h *handlerV1) ReadCategoryIcon(c *gin.Context) {
 
 // @Summary UpdateCategoryIcon
 // @Description API for updating CategoryIcon by id
+// @Security    BearerAuth
 // @Tags CategoryIcon
 // @Accept json
 // @Produce json
@@ -100,7 +103,7 @@ func (h *handlerV1) ReadCategoryIcon(c *gin.Context) {
 // @Success 200 {object} models.CategoryIcon
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/categoryIcon/:id [put]
+// @Router /v1/categoryicon/:id [put]
 func (h *handlerV1) UpdateCategoryIcon(c *gin.Context) {
 	var (
 		body        pbp.CategoryIcon
@@ -134,6 +137,7 @@ func (h *handlerV1) UpdateCategoryIcon(c *gin.Context) {
 
 // @Summary DeleteCategoryIcon
 // @Description API for deleting CategoryIcon by id
+// @Security    BearerAuth
 // @Tags CategoryIcon
 // @Accept json
 // @Produce json
@@ -141,7 +145,7 @@ func (h *handlerV1) UpdateCategoryIcon(c *gin.Context) {
 // @Success 200 {object} models.CategoryIcon
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/categoryIcon/:id [delete]
+// @Router /v1/categoryicon/:id [delete]
 func (h *handlerV1) DeleteCategoryIcon(c *gin.Context) {
 	var jspbMarshal protojson.MarshalOptions
 	jspbMarshal.UseProtoNames = true
@@ -167,16 +171,16 @@ func (h *handlerV1) DeleteCategoryIcon(c *gin.Context) {
 // ListCategoryIcons returns list of CategoryIcons
 // @Summary ListCategoryIcons
 // @Description Api returns list of CategoryIcons
+// @Security    BearerAuth
 // @Tags CategoryIcon
 // @Accept json
 // @Produce json
 // @Param page query int64 true "Page"
 // @Param limit query int64 true "Limit"
-// @Security ApiKeyAuth
 // @Succes 200 {object} models.CategoryIcon
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/categoryIcons/ [get]
+// @Router /v1/categoryicons/ [get]
 func (h *handlerV1) ListCategoryIcons(c *gin.Context) {
 
 	queryParams := c.Request.URL.Query()

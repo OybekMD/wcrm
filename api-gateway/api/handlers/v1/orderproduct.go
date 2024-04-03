@@ -18,6 +18,7 @@ import (
 // Orderproduct
 // @Summary     CreateOrderproduct
 // @Description Api for creating a new Orderproduct
+// @Security    BearerAuth
 // @Tags        Orderproduct
 // @Accept      json
 // @Produce     json
@@ -62,6 +63,7 @@ func (h *handlerV1) CreateOrderproduct(c *gin.Context) {
 
 // @Summary     ReadOrderproduct
 // @Description Api for getting a Orderproduct by ID
+// @Security    BearerAuth
 // @Tags        Orderproduct
 // @Accept      json
 // @Produce     json
@@ -94,6 +96,7 @@ func (h *handlerV1) ReadOrderproduct(c *gin.Context) {
 
 // @Summary UpdateOrderproduct
 // @Description API for updating Orderproduct by id
+// @Security    BearerAuth
 // @Tags Orderproduct
 // @Accept json
 // @Produce json
@@ -146,6 +149,7 @@ func (h *handlerV1) UpdateOrderproduct(c *gin.Context) {
 
 // @Summary DeleteOrderproduct
 // @Description API for deleting Orderproduct by id
+// @Security    BearerAuth
 // @Tags Orderproduct
 // @Accept json
 // @Produce json
@@ -179,12 +183,12 @@ func (h *handlerV1) DeleteOrderproduct(c *gin.Context) {
 // ListOrderproducts returns list of Orderproducts
 // @Summary ListOrderproducts
 // @Description Api returns list of Orderproducts
+// @Security    BearerAuth
 // @Tags Orderproduct
 // @Accept json
 // @Produce json
 // @Param page query int64 true "Page"
 // @Param limit query int64 true "Limit"
-// @Security ApiKeyAuth
 // @Succes 200 {object} models.Orderproduct
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel

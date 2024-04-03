@@ -19,6 +19,10 @@ type Config struct {
 
 	ReviewServiceHost string
 	ReviewServicePort int
+
+	// Comment connect fields
+	CommentServiceHost    string
+	CommentServicePort    int
 }
 
 // Load loads environment vars and inflates Config
@@ -32,6 +36,10 @@ func Load() Config {
 	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "wcrmdb"))
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))
 	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "ebot"))
+
+	// connect to Comment-service
+	c.CommentServiceHost = cast.ToString(getOrReturnDefault("COMMENT_SERVICE_HOST", "localhost"))
+	c.CommentServicePort = cast.ToInt(getOrReturnDefault("COMMENT_SERVICE_HOST", "2222"))
 
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
 

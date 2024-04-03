@@ -1,8 +1,8 @@
 package tests
 
 import (
-	"api-gateway/test_api/handler"
-	"api-gateway/test_api/storage"
+	"api-gateway/api_test/handler"
+	"api-gateway/api_test/storage"
 	"encoding/json"
 	"io"
 	"strconv"

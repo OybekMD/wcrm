@@ -2,25 +2,30 @@ package service
 
 import (
 	"context"
-	pbc "post-service/genproto/post"
+	pbp "post-service/genproto/post"
+	pbc "post-service/genproto/comment"
 	l "post-service/pkg/logger"
+	grpcClient "post-service/service/grpc_client"
 	"post-service/storage"
+	"strconv"
 
 	"github.com/jmoiron/sqlx"
-	// "go.mongodb.org/mongo-driver/mongo"	
+	// "go.mongodb.org/mongo-driver/mongo"
 )
 
 // PostService ...
 type PostService struct {
+	client  grpcClient.IServiceManager
 	storage storage.IStorage
 	logger  l.Logger
 }
 
 // NewPostService ... Postgres
-func NewPostService(db *sqlx.DB, log l.Logger) *PostService {
+func NewPostService(db *sqlx.DB, log l.Logger, client grpcClient.IServiceManager) *PostService {
 	return &PostService{
 		storage: storage.NewStoragePg(db),
 		logger:  log,
+		client:  client,
 	}
 }
 
@@ -32,10 +37,9 @@ func NewPostService(db *sqlx.DB, log l.Logger) *PostService {
 // 	}
 // }
 
-
 // CategoryIcon Start
 
-func (s *PostService) CreateCategoryIcon(ctx context.Context, req *pbc.CategoryIcon) (*pbc.CategoryIcon, error) {
+func (s *PostService) CreateCategoryIcon(ctx context.Context, req *pbp.CategoryIcon) (*pbp.CategoryIcon, error) {
 	res, err := s.storage.Post().CreateCategoryIconDB(req)
 	if err != nil {
 		return nil, err
@@ -43,7 +47,7 @@ func (s *PostService) CreateCategoryIcon(ctx context.Context, req *pbc.CategoryI
 	return res, nil
 }
 
-func (s *PostService) ReadCategoryIcon(ctx context.Context, req *pbc.IdRequest) (*pbc.CategoryIcon, error) {
+func (s *PostService) ReadCategoryIcon(ctx context.Context, req *pbp.IdRequest) (*pbp.CategoryIcon, error) {
 	res, err := s.storage.Post().ReadCategoryIconDB(req)
 	if err != nil {
 		return nil, err
@@ -51,7 +55,7 @@ func (s *PostService) ReadCategoryIcon(ctx context.Context, req *pbc.IdRequest) 
 	return res, nil
 }
 
-func (s *PostService) UpdateCategoryIcon(ctx context.Context, req *pbc.CategoryIcon) (*pbc.CategoryIcon, error) {
+func (s *PostService) UpdateCategoryIcon(ctx context.Context, req *pbp.CategoryIcon) (*pbp.CategoryIcon, error) {
 	res, err := s.storage.Post().UpdateCategoryIconDB(req)
 	if err != nil {
 		return nil, err
@@ -59,7 +63,7 @@ func (s *PostService) UpdateCategoryIcon(ctx context.Context, req *pbc.CategoryI
 	return res, nil
 }
 
-func (s *PostService) DeleteCategoryIcon(ctx context.Context, req *pbc.IdRequest) (*pbc.MessageResponse, error) {
+func (s *PostService) DeleteCategoryIcon(ctx context.Context, req *pbp.IdRequest) (*pbp.MessageResponse, error) {
 	res, err := s.storage.Post().DeleteCategoryIconDB(req)
 	if err != nil {
 		return nil, err
@@ -67,7 +71,7 @@ func (s *PostService) DeleteCategoryIcon(ctx context.Context, req *pbc.IdRequest
 	return res, nil
 }
 
-func (s *PostService) ListCategoryIcons(ctx context.Context, req *pbc.GetAllRequest) (*pbc.ListCategoryIconResponse, error) {
+func (s *PostService) ListCategoryIcons(ctx context.Context, req *pbp.GetAllRequest) (*pbp.ListCategoryIconResponse, error) {
 	CategoryIcons, err := s.storage.Post().ListCategoryIconsDB(req)
 	if err != nil {
 		return nil, err
@@ -78,7 +82,7 @@ func (s *PostService) ListCategoryIcons(ctx context.Context, req *pbc.GetAllRequ
 // CategoryIcon End
 
 // Category Start
-func (s *PostService) CreateCategory(ctx context.Context, req *pbc.Category) (*pbc.Category, error) {
+func (s *PostService) CreateCategory(ctx context.Context, req *pbp.Category) (*pbp.Category, error) {
 	res, err := s.storage.Post().CreateCategoryDB(req)
 	if err != nil {
 		return nil, err
@@ -86,7 +90,7 @@ func (s *PostService) CreateCategory(ctx context.Context, req *pbc.Category) (*p
 	return res, nil
 }
 
-func (s *PostService) ReadCategory(ctx context.Context, req *pbc.IdRequest) (*pbc.Category, error) {
+func (s *PostService) ReadCategory(ctx context.Context, req *pbp.IdRequest) (*pbp.Category, error) {
 	res, err := s.storage.Post().ReadCategoryDB(req)
 	if err != nil {
 		return nil, err
@@ -94,7 +98,7 @@ func (s *PostService) ReadCategory(ctx context.Context, req *pbc.IdRequest) (*pb
 	return res, nil
 }
 
-func (s *PostService) UpdateCategory(ctx context.Context, req *pbc.Category) (*pbc.Category, error) {
+func (s *PostService) UpdateCategory(ctx context.Context, req *pbp.Category) (*pbp.Category, error) {
 	res, err := s.storage.Post().UpdateCategoryDB(req)
 	if err != nil {
 		return nil, err
@@ -102,7 +106,7 @@ func (s *PostService) UpdateCategory(ctx context.Context, req *pbc.Category) (*p
 	return res, nil
 }
 
-func (s *PostService) DeleteCategory(ctx context.Context, req *pbc.IdRequest) (*pbc.MessageResponse, error) {
+func (s *PostService) DeleteCategory(ctx context.Context, req *pbp.IdRequest) (*pbp.MessageResponse, error) {
 	res, err := s.storage.Post().DeleteCategoryDB(req)
 	if err != nil {
 		return nil, err
@@ -110,7 +114,7 @@ func (s *PostService) DeleteCategory(ctx context.Context, req *pbc.IdRequest) (*
 	return res, nil
 }
 
-func (s *PostService) ListCategorys(ctx context.Context, req *pbc.GetAllRequest) (*pbc.ListCategoryResponse, error) {
+func (s *PostService) ListCategorys(ctx context.Context, req *pbp.GetAllRequest) (*pbp.ListCategoryResponse, error) {
 	Categorys, err := s.storage.Post().ListCategorysDB(req)
 	if err != nil {
 		return nil, err
@@ -121,7 +125,7 @@ func (s *PostService) ListCategorys(ctx context.Context, req *pbc.GetAllRequest)
 // Category End
 
 // Product Start
-func (s *PostService) CreateProduct(ctx context.Context, req *pbc.Product) (*pbc.Product, error) {
+func (s *PostService) CreateProduct(ctx context.Context, req *pbp.Product) (*pbp.Product, error) {
 	res, err := s.storage.Post().CreateProductDB(req)
 	if err != nil {
 		return nil, err
@@ -129,7 +133,7 @@ func (s *PostService) CreateProduct(ctx context.Context, req *pbc.Product) (*pbc
 	return res, nil
 }
 
-func (s *PostService) ReadProduct(ctx context.Context, req *pbc.IdRequest) (*pbc.Product, error) {
+func (s *PostService) ReadProduct(ctx context.Context, req *pbp.IdRequest) (*pbp.Product, error) {
 	res, err := s.storage.Post().ReadProductDB(req)
 	if err != nil {
 		return nil, err
@@ -137,7 +141,7 @@ func (s *PostService) ReadProduct(ctx context.Context, req *pbc.IdRequest) (*pbc
 	return res, nil
 }
 
-func (s *PostService) UpdateProduct(ctx context.Context, req *pbc.Product) (*pbc.Product, error) {
+func (s *PostService) UpdateProduct(ctx context.Context, req *pbp.Product) (*pbp.Product, error) {
 	res, err := s.storage.Post().UpdateProductDB(req)
 	if err != nil {
 		return nil, err
@@ -145,7 +149,7 @@ func (s *PostService) UpdateProduct(ctx context.Context, req *pbc.Product) (*pbc
 	return res, nil
 }
 
-func (s *PostService) DeleteProduct(ctx context.Context, req *pbc.IdRequest) (*pbc.MessageResponse, error) {
+func (s *PostService) DeleteProduct(ctx context.Context, req *pbp.IdRequest) (*pbp.MessageResponse, error) {
 	res, err := s.storage.Post().DeleteProductDB(req)
 	if err != nil {
 		return nil, err
@@ -153,19 +157,41 @@ func (s *PostService) DeleteProduct(ctx context.Context, req *pbc.IdRequest) (*p
 	return res, nil
 }
 
-func (s *PostService) ListProducts(ctx context.Context, req *pbc.GetAllRequest) (*pbc.ListProductResponse, error) {
-	Products, err := s.storage.Post().ListProductsDB(req)
+func (s *PostService) ListProducts(ctx context.Context, req *pbp.GetAllRequest) (*pbp.ListProductResponse, error) {
+	products, err := s.storage.Post().ListProductsDB(req)
 	if err != nil {
 		return nil, err
 	}
-	return Products, nil
+	return products, nil
+}
+func (s *PostService) ListProductsWithComments(ctx context.Context, req *pbp.GetAllRequest) (*pbp.ListProductWithCommentResponse, error) {
+	var productsWithComments pbp.ListProductWithCommentResponse
+	products, err := s.storage.Post().ListProductsWithCommentsDB(req)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, k := range products.Productwithcomments {
+		var pwd pbp.ProductWithComment
+		// var listComment pbc.ListCommentResponse
+		strid := strconv.Itoa(int(k.Id))
+		comments, err := s.client.CommentService().ListCommentsByProductId(ctx, &pbc.IdRequest{Id: strid})
+		if err != nil {
+			return nil, err
+		}
+		for _, j := range comments.Comments {
+			pwd.Comments = append(pwd.Comments, (*pbp.Comment)(j))
+		}
+		productsWithComments.Productwithcomments = append(productsWithComments.Productwithcomments, &pwd)
+	}
+	return products, nil
 }
 
 // Product End
 
 // Orderproduct Start
 
-func (s *PostService) CreateOrderproduct(ctx context.Context, req *pbc.Orderproduct) (*pbc.Orderproduct, error) {
+func (s *PostService) CreateOrderproduct(ctx context.Context, req *pbp.Orderproduct) (*pbp.Orderproduct, error) {
 	res, err := s.storage.Post().CreateOrderproductDB(req)
 	if err != nil {
 		return nil, err
@@ -173,7 +199,7 @@ func (s *PostService) CreateOrderproduct(ctx context.Context, req *pbc.Orderprod
 	return res, nil
 }
 
-func (s *PostService) ReadOrderproduct(ctx context.Context, req *pbc.IdRequest) (*pbc.Orderproduct, error) {
+func (s *PostService) ReadOrderproduct(ctx context.Context, req *pbp.IdRequest) (*pbp.Orderproduct, error) {
 	res, err := s.storage.Post().ReadOrderproductDB(req)
 	if err != nil {
 		return nil, err
@@ -181,7 +207,7 @@ func (s *PostService) ReadOrderproduct(ctx context.Context, req *pbc.IdRequest) 
 	return res, nil
 }
 
-func (s *PostService) UpdateOrderproduct(ctx context.Context, req *pbc.Orderproduct) (*pbc.Orderproduct, error) {
+func (s *PostService) UpdateOrderproduct(ctx context.Context, req *pbp.Orderproduct) (*pbp.Orderproduct, error) {
 	res, err := s.storage.Post().UpdateOrderproductDB(req)
 	if err != nil {
 		return nil, err
@@ -189,7 +215,7 @@ func (s *PostService) UpdateOrderproduct(ctx context.Context, req *pbc.Orderprod
 	return res, nil
 }
 
-func (s *PostService) DeleteOrderproduct(ctx context.Context, req *pbc.IdRequest) (*pbc.MessageResponse, error) {
+func (s *PostService) DeleteOrderproduct(ctx context.Context, req *pbp.IdRequest) (*pbp.MessageResponse, error) {
 	res, err := s.storage.Post().DeleteOrderproductDB(req)
 	if err != nil {
 		return nil, err
@@ -197,7 +223,7 @@ func (s *PostService) DeleteOrderproduct(ctx context.Context, req *pbc.IdRequest
 	return res, nil
 }
 
-func (s *PostService) ListOrderproducts(ctx context.Context, req *pbc.GetAllRequest) (*pbc.ListOrderproductResponse, error) {
+func (s *PostService) ListOrderproducts(ctx context.Context, req *pbp.GetAllRequest) (*pbp.ListOrderproductResponse, error) {
 	Orderproducts, err := s.storage.Post().ListOrderproductsDB(req)
 	if err != nil {
 		return nil, err

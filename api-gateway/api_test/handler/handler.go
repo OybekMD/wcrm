@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"api-gateway/test_api/storage"
-	"api-gateway/test_api/storage/kv"
+	"api-gateway/api_test/storage"
+	"api-gateway/api_test/storage/kv"
 	"encoding/json"
 	"fmt"
 	"net/http"

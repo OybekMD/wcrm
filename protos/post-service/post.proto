@@ -21,6 +21,7 @@ service PostService {
   rpc UpdateProduct (Product) returns (Product);
   rpc DeleteProduct (IdRequest) returns (MessageResponse);
   rpc ListProducts (GetAllRequest) returns (ListProductResponse);
+  rpc ListProductsWithComments (GetAllRequest) returns (ListProductWithCommentResponse);
 
   rpc CreateOrderproduct (Orderproduct) returns (Orderproduct);
   rpc ReadOrderproduct (IdRequest) returns (Orderproduct);
@@ -57,6 +58,29 @@ message Product {
   string deleted_at = 9;
 }
 
+message Comment {
+  int64 id = 1;
+  string content = 2;
+  string user_id = 3;
+  int64 product_id = 4;
+  string created_at = 5;
+  string updated_at = 6;
+  string deleted_at = 7;
+}
+
+message ProductWithComment {
+  int64 id = 1;
+  string title = 2;
+  string description = 3;
+  int64 price = 4;
+  string picture = 5;
+  int64 category_id = 6;
+  string created_at = 7;
+  string updated_at = 8;
+  string deleted_at = 9;
+  repeated Comment comments = 10;
+}
+
 message Orderproduct {
   int64 id = 1;
   string user_id = 2;
@@ -89,6 +113,10 @@ message ListCategoryResponse{
 
 message ListProductResponse{
   repeated Product products = 1;
+}
+
+message ListProductWithCommentResponse{
+  repeated ProductWithComment productwithcomments = 1;
 }
 
 message ListOrderproductResponse{

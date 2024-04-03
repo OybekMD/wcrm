@@ -28,12 +28,25 @@ type UserResponse struct {
 	UpdatedAt    string `json:"udpated_at"`
 }
 
+
 // Signup ...
 type Signup struct {
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
+}
+// Login ...
+type Login struct {
+	Id              string `json:"id"`
+	FirstName       string `json:"first_name"`
+	LastName        string `json:"last_name"`
+	BirthDay        string `json:"birth_day"`
+	Email           string `json:"email"`
+	Avatar          string `json:"avatar"`
+	ExperienceLevel int64 `json:"experiencelevel"`
+	AccessToken     string `json:"access_token"`
+	RefreshToken    string `json:"refresh_token"`
 }
 
 // ResponseMessage ...
@@ -69,6 +82,19 @@ func ParseStruct(req *pbu.User, access string) *User {
 		RefreshToken: req.RefreshToken,
 		CreatedAt:    req.CreatedAt,
 		UpdatedAt:    req.UpdatedAt,
+	}
+}
+
+func ParseStructLogin(req *pbu.User, access string) *Login {
+	return &Login{
+		Id:              req.Id,
+		FirstName:       req.FirstName,
+		LastName:        req.LastName,
+		BirthDay:        req.BirthDay,
+		Email:           req.Email,
+		Avatar:          req.Avatar,
+		AccessToken:     access,
+		RefreshToken:    req.RefreshToken,
 	}
 }
 

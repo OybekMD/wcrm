@@ -15,9 +15,14 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/Orderproduct/": {
+        "/v1/category": {
             "post": {
-                "description": "Api for creating a new Orderproduct",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api for creating a new Category",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,25 +30,25 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Orderproduct"
+                    "Category"
                 ],
-                "summary": "CreateOrderproduct",
+                "summary": "CreateCategory",
                 "parameters": [
                     {
-                        "description": "Orderproduct information for creating a new Orderproduct",
-                        "name": "Orderproduct",
+                        "description": "Category information for creating a new Category",
+                        "name": "Category",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.OrderproductReq"
+                            "$ref": "#/definitions/models.CategoryReq"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully created Orderproduct",
+                        "description": "Successfully created Category",
                         "schema": {
-                            "$ref": "#/definitions/models.Orderproduct"
+                            "$ref": "#/definitions/models.Category"
                         }
                     },
                     "400": {
@@ -61,9 +66,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/Orderproduct/:id": {
+        "/v1/category/:id": {
             "get": {
-                "description": "Api for getting a Orderproduct by ID",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api for getting a Category by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -71,23 +81,23 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Orderproduct"
+                    "Category"
                 ],
-                "summary": "ReadOrderproduct",
+                "summary": "ReadCategory",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Orderproduct ID",
+                        "description": "Category ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successfully retrieved Orderproduct",
+                        "description": "Successfully retrieved Category",
                         "schema": {
-                            "$ref": "#/definitions/models.Orderproduct"
+                            "$ref": "#/definitions/models.Category"
                         }
                     },
                     "400": {
@@ -105,7 +115,12 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "description": "API for updating Orderproduct by id",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for updating Category by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -113,24 +128,17 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Orderproduct"
+                    "Category"
                 ],
-                "summary": "UpdateOrderproduct",
+                "summary": "UpdateCategory",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Orderproduct ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Orderproduct object to update",
+                        "description": "Category object to update",
                         "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.OrderproductUpdate"
+                            "$ref": "#/definitions/models.CategoryUpdate"
                         }
                     }
                 ],
@@ -138,7 +146,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Orderproduct"
+                            "$ref": "#/definitions/models.Category"
                         }
                     },
                     "400": {
@@ -156,7 +164,12 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "description": "API for deleting Orderproduct by id",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for deleting Category by id",
                 "consumes": [
                     "application/json"
                 ],
@@ -164,15 +177,15 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Orderproduct"
+                    "Category"
                 ],
-                "summary": "DeleteOrderproduct",
+                "summary": "DeleteCategory",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Orderproduct ID",
+                        "description": "Category ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -180,7 +193,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Orderproduct"
+                            "$ref": "#/definitions/models.Category"
                         }
                     },
                     "400": {
@@ -198,14 +211,14 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/Orderproducts/": {
-            "get": {
+        "/v1/categoryicon": {
+            "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
-                "description": "Api returns list of Orderproducts",
+                "description": "Api for creating a new CategoryIcon",
                 "consumes": [
                     "application/json"
                 ],
@@ -213,22 +226,557 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Orderproduct"
+                    "CategoryIcon"
                 ],
-                "summary": "ListOrderproducts",
+                "summary": "CreateCategoryIcon",
+                "parameters": [
+                    {
+                        "description": "CategoryIcon information for creating a new CategoryIcon",
+                        "name": "CategoryIcon",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CategoryIconReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully created CategoryIcon",
+                        "schema": {
+                            "$ref": "#/definitions/models.CategoryIcon"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/categoryicon/:id": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api for getting a CategoryIcon by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CategoryIcon"
+                ],
+                "summary": "ReadCategoryIcon",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CategoryIcon ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved CategoryIcon",
+                        "schema": {
+                            "$ref": "#/definitions/models.CategoryIcon"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for updating CategoryIcon by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CategoryIcon"
+                ],
+                "summary": "UpdateCategoryIcon",
+                "parameters": [
+                    {
+                        "description": "CategoryIcon object to update",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CategoryIconUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.CategoryIcon"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for deleting CategoryIcon by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CategoryIcon"
+                ],
+                "summary": "DeleteCategoryIcon",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CategoryIcon ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.CategoryIcon"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/categoryicons/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api returns list of CategoryIcons",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CategoryIcon"
+                ],
+                "summary": "ListCategoryIcons",
                 "parameters": [
                     {
                         "type": "integer",
                         "description": "Page",
                         "name": "page",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
                         "description": "Limit",
                         "name": "limit",
-                        "in": "path",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/categorys/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api returns list of Categorys",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "ListCategorys",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/comment": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for updating Comment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "UpdateComment",
+                "parameters": [
+                    {
+                        "description": "Comment object to update",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CommentUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Comment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api for creating a new Comment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "CreateComment",
+                "parameters": [
+                    {
+                        "description": "Comment information for creating a new Comment",
+                        "name": "Comment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CommentReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully created Comment",
+                        "schema": {
+                            "$ref": "#/definitions/models.Comment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/comment/:id": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api for getting a Comment by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "ReadComment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Comment ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved Comment",
+                        "schema": {
+                            "$ref": "#/definitions/models.Comment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for deleting Comment by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "DeleteComment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Comment ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Comment"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/comments/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api returns list of Comments",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "ListComments",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/commentsbyproductid": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api returns list of Comments",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "ListCommentsByProductId",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Comment ID",
+                        "name": "id",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -297,6 +845,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/listproductwithcomments": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api returns list of Products",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Product"
+                ],
+                "summary": "ListProducts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/login": {
             "post": {
                 "description": "Login - Api for login users",
@@ -328,6 +926,259 @@ const docTemplate = `{
                             "$ref": "#/definitions/models.User"
                         }
                     },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/orderproduct": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api for creating a new Orderproduct",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orderproduct"
+                ],
+                "summary": "CreateOrderproduct",
+                "parameters": [
+                    {
+                        "description": "Orderproduct information for creating a new Orderproduct",
+                        "name": "Orderproduct",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.OrderproductReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully created Orderproduct",
+                        "schema": {
+                            "$ref": "#/definitions/models.Orderproduct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/orderproduct/:id": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api for getting a Orderproduct by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orderproduct"
+                ],
+                "summary": "ReadOrderproduct",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Orderproduct ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved Orderproduct",
+                        "schema": {
+                            "$ref": "#/definitions/models.Orderproduct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for updating Orderproduct by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orderproduct"
+                ],
+                "summary": "UpdateOrderproduct",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Orderproduct ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "description": "Orderproduct object to update",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.OrderproductUpdate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Orderproduct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "API for deleting Orderproduct by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orderproduct"
+                ],
+                "summary": "DeleteOrderproduct",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Orderproduct ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Orderproduct"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardErrorModel"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/orderproducts/": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Api returns list of Orderproducts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Orderproduct"
+                ],
+                "summary": "ListOrderproducts",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -392,8 +1243,13 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/product/": {
+        "/v1/product": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Api for creating a new Product",
                 "consumes": [
                     "application/json"
@@ -440,6 +1296,11 @@ const docTemplate = `{
         },
         "/v1/product/:id": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Api for getting a Product by ID",
                 "consumes": [
                     "application/json"
@@ -482,6 +1343,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "API for updating Product by id",
                 "consumes": [
                     "application/json"
@@ -533,6 +1399,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "API for deleting Product by id",
                 "consumes": [
                     "application/json"
@@ -579,7 +1450,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Api returns list of Products",
@@ -859,7 +1730,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/Signup": {
+        "/v1/signup": {
             "post": {
                 "description": "Signin - Api for Signining users",
                 "consumes": [
@@ -954,8 +1825,13 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/user/": {
+        "/v1/user": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Api for creating a new user",
                 "consumes": [
                     "application/json"
@@ -1002,6 +1878,11 @@ const docTemplate = `{
         },
         "/v1/user/:id": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Api for getting user by id",
                 "consumes": [
                     "application/json"
@@ -1018,7 +1899,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1044,6 +1925,11 @@ const docTemplate = `{
                 }
             },
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "API for updating user by id",
                 "consumes": [
                     "application/json"
@@ -1056,13 +1942,6 @@ const docTemplate = `{
                 ],
                 "summary": "UpdateUser",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "description": "ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
                     {
                         "description": "User object to update",
                         "name": "body",
@@ -1095,6 +1974,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "API for deleting user by id",
                 "consumes": [
                     "application/json"
@@ -1111,7 +1995,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "ID",
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -1141,7 +2025,7 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Api returns list of users",
@@ -1284,6 +2168,153 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.Category": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CategoryIcon": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CategoryIconReq": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CategoryIconUpdate": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CategoryReq": {
+            "type": "object",
+            "properties": {
+                "icon_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CategoryUpdate": {
+            "type": "object",
+            "properties": {
+                "icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Comment": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CommentReq": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CommentUpdate": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.CreateUserRoleRequest": {
             "type": "object",
             "properties": {
@@ -1326,7 +2357,7 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
-                "picture_id": {
+                "product_id": {
                     "type": "integer"
                 },
                 "user_id": {
@@ -1337,7 +2368,7 @@ const docTemplate = `{
         "models.OrderproductReq": {
             "type": "object",
             "properties": {
-                "picture_id": {
+                "product_id": {
                     "type": "integer"
                 },
                 "user_id": {
@@ -1348,7 +2379,7 @@ const docTemplate = `{
         "models.OrderproductUpdate": {
             "type": "object",
             "properties": {
-                "picture_id": {
+                "product_id": {
                     "type": "integer"
                 },
                 "user_id": {
@@ -1359,6 +2390,9 @@ const docTemplate = `{
         "models.Product": {
             "type": "object",
             "properties": {
+                "category_id": {
+                    "type": "integer"
+                },
                 "created_at": {
                     "type": "string"
                 },
@@ -1370,6 +2404,9 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "picture": {
+                    "type": "string"
                 },
                 "price": {
                     "type": "integer"
@@ -1385,7 +2422,13 @@ const docTemplate = `{
         "models.ProductReq": {
             "type": "object",
             "properties": {
+                "category_id": {
+                    "type": "integer"
+                },
                 "description": {
+                    "type": "string"
+                },
+                "picture": {
                     "type": "string"
                 },
                 "price": {
@@ -1399,8 +2442,14 @@ const docTemplate = `{
         "models.ProductUpdate": {
             "type": "object",
             "properties": {
+                "category_id": {
+                    "type": "integer"
+                },
                 "description": {
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "price": {
                     "type": "integer"
@@ -1480,17 +2529,14 @@ const docTemplate = `{
                 "birth_day": {
                     "type": "string"
                 },
-                "coint": {
-                    "type": "integer"
-                },
                 "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
-                },
-                "experiience_level": {
-                    "type": "integer"
                 },
                 "first_name": {
                     "type": "string"
@@ -1510,10 +2556,7 @@ const docTemplate = `{
                 "refresh_token": {
                     "type": "string"
                 },
-                "score": {
-                    "type": "integer"
-                },
-                "updeted_at": {
+                "updated_at": {
                     "type": "string"
                 },
                 "username": {
@@ -1566,7 +2609,7 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "BearerAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"

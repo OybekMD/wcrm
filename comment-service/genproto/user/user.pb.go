@@ -538,26 +538,73 @@ func (m *MessageResponse) GetMessage() string {
 	return ""
 }
 
-type CheckUser struct {
-	Field                string   `protobuf:"bytes,1,opt,name=field,proto3" json:"field"`
+type CheckUniqueRespons struct {
+	IsExist              bool     `protobuf:"varint,1,opt,name=is_exist,json=isExist,proto3" json:"is_exist"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CheckUniqueRespons) Reset()         { *m = CheckUniqueRespons{} }
+func (m *CheckUniqueRespons) String() string { return proto.CompactTextString(m) }
+func (*CheckUniqueRespons) ProtoMessage()    {}
+func (*CheckUniqueRespons) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5fe9d1857265efb6, []int{8}
+}
+func (m *CheckUniqueRespons) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *CheckUniqueRespons) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_CheckUniqueRespons.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *CheckUniqueRespons) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CheckUniqueRespons.Merge(m, src)
+}
+func (m *CheckUniqueRespons) XXX_Size() int {
+	return m.Size()
+}
+func (m *CheckUniqueRespons) XXX_DiscardUnknown() {
+	xxx_messageInfo_CheckUniqueRespons.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CheckUniqueRespons proto.InternalMessageInfo
+
+func (m *CheckUniqueRespons) GetIsExist() bool {
+	if m != nil {
+		return m.IsExist
+	}
+	return false
+}
+
+type CheckUniqueRequest struct {
+	Column               string   `protobuf:"bytes,1,opt,name=column,proto3" json:"column"`
 	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CheckUser) Reset()         { *m = CheckUser{} }
-func (m *CheckUser) String() string { return proto.CompactTextString(m) }
-func (*CheckUser) ProtoMessage()    {}
-func (*CheckUser) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5fe9d1857265efb6, []int{8}
+func (m *CheckUniqueRequest) Reset()         { *m = CheckUniqueRequest{} }
+func (m *CheckUniqueRequest) String() string { return proto.CompactTextString(m) }
+func (*CheckUniqueRequest) ProtoMessage()    {}
+func (*CheckUniqueRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5fe9d1857265efb6, []int{9}
 }
-func (m *CheckUser) XXX_Unmarshal(b []byte) error {
+func (m *CheckUniqueRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *CheckUser) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *CheckUniqueRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_CheckUser.Marshal(b, m, deterministic)
+		return xxx_messageInfo_CheckUniqueRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -567,77 +614,30 @@ func (m *CheckUser) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *CheckUser) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckUser.Merge(m, src)
+func (m *CheckUniqueRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CheckUniqueRequest.Merge(m, src)
 }
-func (m *CheckUser) XXX_Size() int {
+func (m *CheckUniqueRequest) XXX_Size() int {
 	return m.Size()
 }
-func (m *CheckUser) XXX_DiscardUnknown() {
-	xxx_messageInfo_CheckUser.DiscardUnknown(m)
+func (m *CheckUniqueRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CheckUniqueRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CheckUser proto.InternalMessageInfo
+var xxx_messageInfo_CheckUniqueRequest proto.InternalMessageInfo
 
-func (m *CheckUser) GetField() string {
+func (m *CheckUniqueRequest) GetColumn() string {
 	if m != nil {
-		return m.Field
+		return m.Column
 	}
 	return ""
 }
 
-func (m *CheckUser) GetValue() string {
+func (m *CheckUniqueRequest) GetValue() string {
 	if m != nil {
 		return m.Value
 	}
 	return ""
-}
-
-type CheckRes struct {
-	Exists               bool     `protobuf:"varint,1,opt,name=exists,proto3" json:"exists"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CheckRes) Reset()         { *m = CheckRes{} }
-func (m *CheckRes) String() string { return proto.CompactTextString(m) }
-func (*CheckRes) ProtoMessage()    {}
-func (*CheckRes) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5fe9d1857265efb6, []int{9}
-}
-func (m *CheckRes) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *CheckRes) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_CheckRes.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *CheckRes) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckRes.Merge(m, src)
-}
-func (m *CheckRes) XXX_Size() int {
-	return m.Size()
-}
-func (m *CheckRes) XXX_DiscardUnknown() {
-	xxx_messageInfo_CheckRes.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CheckRes proto.InternalMessageInfo
-
-func (m *CheckRes) GetExists() bool {
-	if m != nil {
-		return m.Exists
-	}
-	return false
 }
 
 func init() {
@@ -649,56 +649,57 @@ func init() {
 	proto.RegisterType((*UpdatePasswordRequest)(nil), "user.UpdatePasswordRequest")
 	proto.RegisterType((*ListUserResponse)(nil), "user.ListUserResponse")
 	proto.RegisterType((*MessageResponse)(nil), "user.MessageResponse")
-	proto.RegisterType((*CheckUser)(nil), "user.CheckUser")
-	proto.RegisterType((*CheckRes)(nil), "user.CheckRes")
+	proto.RegisterType((*CheckUniqueRespons)(nil), "user.CheckUniqueRespons")
+	proto.RegisterType((*CheckUniqueRequest)(nil), "user.CheckUniqueRequest")
 }
 
 func init() { proto.RegisterFile("user-service/user.proto", fileDescriptor_5fe9d1857265efb6) }
 
 var fileDescriptor_5fe9d1857265efb6 = []byte{
-	// 658 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xdf, 0x4e, 0x13, 0x4f,
-	0x14, 0xfe, 0x95, 0xed, 0xc2, 0xf6, 0xb4, 0x14, 0x32, 0x3f, 0xfe, 0x6c, 0x4a, 0x6c, 0x70, 0x35,
-	0x81, 0xc4, 0x80, 0x09, 0x92, 0xa0, 0x77, 0x22, 0x08, 0x21, 0x41, 0x62, 0x16, 0xb9, 0xf1, 0xa6,
-	0x99, 0x76, 0x0f, 0x74, 0xc2, 0xb6, 0xbb, 0xee, 0x4c, 0x51, 0xde, 0xc1, 0x07, 0xf0, 0x69, 0xbc,
-	0xf6, 0xd2, 0x47, 0x30, 0xf8, 0x22, 0x66, 0xce, 0xcc, 0x34, 0xdb, 0x06, 0xf4, 0x6e, 0xbe, 0xef,
-	0x9b, 0xf3, 0xcd, 0xd9, 0x33, 0xdf, 0x2c, 0xac, 0x8e, 0x24, 0x16, 0x5b, 0x12, 0x8b, 0x1b, 0xd1,
-	0xc3, 0xe7, 0x1a, 0x6c, 0xe7, 0x45, 0xa6, 0x32, 0x56, 0xd5, 0xeb, 0xe8, 0xab, 0x07, 0xd5, 0x0b,
-	0x89, 0x05, 0x6b, 0xc2, 0x8c, 0x48, 0xc2, 0xca, 0x7a, 0x65, 0xb3, 0x16, 0xcf, 0x88, 0x84, 0x3d,
-	0x02, 0xb8, 0x14, 0x85, 0x54, 0x9d, 0x21, 0x1f, 0x60, 0x38, 0x43, 0x7c, 0x8d, 0x98, 0x33, 0x3e,
-	0x40, 0xb6, 0x06, 0xb5, 0x94, 0x3b, 0xd5, 0x23, 0x35, 0xd0, 0x04, 0x89, 0x2d, 0x08, 0xb4, 0x39,
-	0x69, 0x55, 0xa3, 0x39, 0xcc, 0x1e, 0x43, 0x23, 0xef, 0x67, 0x43, 0xec, 0x0c, 0x47, 0x83, 0x2e,
-	0x16, 0xa1, 0x4f, 0x7a, 0x9d, 0xb8, 0x33, 0xa2, 0xd8, 0x22, 0x78, 0x5d, 0x91, 0x85, 0xb3, 0xa4,
-	0xe8, 0xa5, 0x3e, 0xad, 0x2b, 0x0a, 0xd5, 0xef, 0x24, 0xfc, 0x36, 0x9c, 0x33, 0x8e, 0x44, 0x1c,
-	0xf2, 0x5b, 0xb6, 0x04, 0x3e, 0x0e, 0xb8, 0x48, 0xc3, 0x80, 0x04, 0x03, 0xd8, 0x0a, 0xcc, 0xf2,
-	0x1b, 0xae, 0x78, 0x11, 0xd6, 0x88, 0xb6, 0x48, 0xf7, 0x96, 0x73, 0x29, 0x3f, 0x67, 0x45, 0x12,
-	0x82, 0x71, 0x72, 0x98, 0x3d, 0x81, 0xf9, 0x02, 0x2f, 0x0b, 0x94, 0xfd, 0x8e, 0xca, 0xae, 0x71,
-	0x18, 0xd6, 0x69, 0x43, 0xc3, 0x92, 0x1f, 0x34, 0xa7, 0x07, 0xd3, 0x2b, 0x90, 0x2b, 0x4c, 0x3a,
-	0x5c, 0x85, 0x0d, 0x33, 0x18, 0xcb, 0xec, 0x2b, 0x2d, 0x8f, 0xf2, 0xc4, 0xc9, 0xf3, 0x46, 0xb6,
-	0x8c, 0x91, 0x13, 0x4c, 0xd1, 0xca, 0x4d, 0x23, 0x5b, 0x66, 0x5f, 0x45, 0x6b, 0x50, 0x3b, 0x49,
-	0x62, 0xfc, 0x34, 0x42, 0xa9, 0xa6, 0xaf, 0x24, 0x7a, 0x09, 0x8b, 0xe7, 0x8a, 0x2b, 0x21, 0x95,
-	0xe8, 0x3d, 0xb0, 0x47, 0x0f, 0x43, 0xea, 0xb3, 0xec, 0x8d, 0x19, 0x10, 0xbd, 0x86, 0xc6, 0x69,
-	0x76, 0x25, 0x86, 0xae, 0x6a, 0x09, 0xfc, 0xb7, 0x34, 0x32, 0x53, 0x68, 0x80, 0x1e, 0xcd, 0x7b,
-	0x37, 0x1a, 0x53, 0x3e, 0xc6, 0xd1, 0x2b, 0x98, 0x3f, 0x46, 0xb5, 0x9f, 0xa6, 0xce, 0x82, 0x41,
-	0x35, 0xe7, 0x57, 0x48, 0x0e, 0x5e, 0x4c, 0x6b, 0x6d, 0x9b, 0x8a, 0x81, 0x50, 0x54, 0xed, 0xc5,
-	0x06, 0x44, 0x27, 0xb0, 0x7c, 0x41, 0xdf, 0xef, 0xcc, 0x4a, 0x5d, 0x60, 0xb9, 0x0b, 0x74, 0x5d,
-	0xe4, 0x53, 0x5d, 0x38, 0x1c, 0xed, 0xc2, 0xe2, 0xa9, 0x90, 0x4a, 0x07, 0x36, 0x46, 0x99, 0x67,
-	0x43, 0x89, 0x6c, 0x1d, 0x7c, 0x1d, 0x2e, 0x19, 0x56, 0xd6, 0xbd, 0xcd, 0xfa, 0x0e, 0x6c, 0x53,
-	0xc6, 0x69, 0x8b, 0x11, 0xa2, 0x67, 0xb0, 0xf0, 0x0e, 0xa5, 0xe4, 0x57, 0x38, 0x2e, 0x0a, 0x61,
-	0xce, 0x52, 0xf6, 0x70, 0x07, 0xa3, 0x3d, 0xa8, 0x1d, 0xf4, 0xb1, 0x77, 0x4d, 0x8f, 0x62, 0x09,
-	0xfc, 0x4b, 0x81, 0xa9, 0x1b, 0xb0, 0x01, 0x9a, 0xbd, 0xe1, 0xe9, 0x68, 0x3c, 0x63, 0x02, 0x51,
-	0x04, 0x01, 0x15, 0xc6, 0x28, 0x75, 0xf8, 0xf0, 0x8b, 0x90, 0x4a, 0x52, 0x61, 0x10, 0x5b, 0xb4,
-	0xf3, 0xdd, 0x83, 0xba, 0x36, 0x3e, 0x37, 0xcf, 0x91, 0x6d, 0x80, 0x4f, 0xf7, 0xc2, 0x98, 0xe9,
-	0xba, 0x7c, 0x49, 0xad, 0xd2, 0x97, 0xb0, 0x2d, 0x00, 0x32, 0x3f, 0xa2, 0x06, 0x16, 0x8c, 0x32,
-	0xee, 0xb3, 0xd5, 0x2c, 0x11, 0xfa, 0xfc, 0x2d, 0xa8, 0x1f, 0xa3, 0x3a, 0x1a, 0xa5, 0x29, 0xbd,
-	0xc7, 0x7f, 0xb9, 0x3f, 0x05, 0x38, 0xa0, 0x00, 0x13, 0x2a, 0x29, 0x13, 0xbb, 0x36, 0x20, 0x88,
-	0x91, 0x27, 0xb4, 0xb6, 0x1d, 0x8c, 0xb3, 0x3a, 0x6d, 0x67, 0x2e, 0xfc, 0xaf, 0x76, 0xbb, 0x00,
-	0x87, 0x94, 0xfb, 0xfb, 0x0d, 0x97, 0x0d, 0x31, 0x7d, 0x71, 0x7b, 0x10, 0xb8, 0x04, 0xb0, 0xff,
-	0xcd, 0x96, 0x89, 0x5c, 0xb6, 0x56, 0xec, 0xb7, 0x4e, 0xc7, 0xe4, 0x10, 0x9a, 0x93, 0x29, 0x64,
-	0x6b, 0xb6, 0x99, 0xfb, 0xb2, 0xf9, 0xc0, 0xf1, 0x6f, 0x56, 0x7f, 0xdc, 0xb5, 0x2b, 0x3f, 0xef,
-	0xda, 0x95, 0x5f, 0x77, 0xed, 0xca, 0xb7, 0xdf, 0xed, 0xff, 0x3e, 0xfa, 0xf4, 0x4f, 0xed, 0xce,
-	0xd2, 0x4f, 0xf5, 0xc5, 0x9f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x0a, 0x43, 0x2a, 0xbf, 0x6f, 0x05,
-	0x00, 0x00,
+	// 683 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xdb, 0x4e, 0x14, 0x41,
+	0x10, 0x75, 0xd9, 0xdb, 0x6c, 0xed, 0x72, 0x49, 0xcb, 0x65, 0x5c, 0xe2, 0x06, 0x47, 0x12, 0x48,
+	0x0c, 0x90, 0x20, 0x89, 0xfa, 0xe6, 0x72, 0x91, 0x90, 0x20, 0x31, 0x83, 0xbc, 0xf8, 0xb2, 0xe9,
+	0xdd, 0x29, 0xd8, 0x0e, 0x73, 0x63, 0xba, 0x07, 0xe5, 0x0f, 0x7c, 0xf0, 0x03, 0xfc, 0x24, 0x1f,
+	0xfd, 0x04, 0x83, 0x3f, 0x62, 0xba, 0x7a, 0x66, 0x33, 0x2c, 0x0b, 0xbe, 0xf5, 0x39, 0xa7, 0xaa,
+	0xfa, 0x74, 0x75, 0x75, 0xc3, 0x52, 0x2a, 0x31, 0xd9, 0x90, 0x98, 0x5c, 0x8b, 0x01, 0x6e, 0x69,
+	0xb0, 0x19, 0x27, 0x91, 0x8a, 0x58, 0x45, 0xaf, 0x9d, 0x1f, 0x65, 0xa8, 0x9c, 0x49, 0x4c, 0xd8,
+	0x0c, 0x4c, 0x09, 0xcf, 0x2e, 0xad, 0x94, 0xd6, 0x1b, 0xee, 0x94, 0xf0, 0xd8, 0x73, 0x80, 0x73,
+	0x91, 0x48, 0xd5, 0x0b, 0x79, 0x80, 0xf6, 0x14, 0xf1, 0x0d, 0x62, 0x4e, 0x78, 0x80, 0x6c, 0x19,
+	0x1a, 0x3e, 0xcf, 0xd5, 0x32, 0xa9, 0x96, 0x26, 0x48, 0x6c, 0x83, 0xa5, 0x8b, 0x93, 0x56, 0x31,
+	0x5a, 0x8e, 0xd9, 0x0b, 0x68, 0xc5, 0xc3, 0x28, 0xc4, 0x5e, 0x98, 0x06, 0x7d, 0x4c, 0xec, 0x2a,
+	0xe9, 0x4d, 0xe2, 0x4e, 0x88, 0x62, 0x73, 0x50, 0xee, 0x8b, 0xc8, 0xae, 0x91, 0xa2, 0x97, 0x7a,
+	0xb7, 0xbe, 0x48, 0xd4, 0xb0, 0xe7, 0xf1, 0x1b, 0xbb, 0x6e, 0x2a, 0x12, 0xb1, 0xcf, 0x6f, 0xd8,
+	0x3c, 0x54, 0x31, 0xe0, 0xc2, 0xb7, 0x2d, 0x12, 0x0c, 0x60, 0x8b, 0x50, 0xe3, 0xd7, 0x5c, 0xf1,
+	0xc4, 0x6e, 0x10, 0x9d, 0x21, 0xed, 0x2d, 0xe6, 0x52, 0x7e, 0x8d, 0x12, 0xcf, 0x06, 0x53, 0x29,
+	0xc7, 0xec, 0x25, 0x4c, 0x27, 0x78, 0x9e, 0xa0, 0x1c, 0xf6, 0x54, 0x74, 0x89, 0xa1, 0xdd, 0xa4,
+	0x80, 0x56, 0x46, 0x7e, 0xd6, 0x9c, 0x6e, 0xcc, 0x20, 0x41, 0xae, 0xd0, 0xeb, 0x71, 0x65, 0xb7,
+	0x4c, 0x63, 0x32, 0xa6, 0xab, 0xb4, 0x9c, 0xc6, 0x5e, 0x2e, 0x4f, 0x1b, 0x39, 0x63, 0x8c, 0xec,
+	0xa1, 0x8f, 0x99, 0x3c, 0x63, 0xe4, 0x8c, 0xe9, 0x2a, 0x67, 0x19, 0x1a, 0x47, 0x9e, 0x8b, 0x57,
+	0x29, 0x4a, 0x35, 0x7e, 0x25, 0xce, 0x5b, 0x98, 0x3b, 0x55, 0x5c, 0x09, 0xa9, 0xc4, 0xe0, 0x81,
+	0x18, 0xdd, 0x0c, 0xa9, 0xf7, 0xca, 0x6e, 0xcc, 0x00, 0xe7, 0x3d, 0xb4, 0x8e, 0xa3, 0x0b, 0x11,
+	0xe6, 0x59, 0xf3, 0x50, 0x3d, 0xa0, 0x96, 0x99, 0x44, 0x03, 0x74, 0x6b, 0x3e, 0xe5, 0xad, 0x31,
+	0xe9, 0x23, 0xec, 0xbc, 0x83, 0xe9, 0x43, 0x54, 0x5d, 0xdf, 0xcf, 0x4b, 0x30, 0xa8, 0xc4, 0xfc,
+	0x02, 0xa9, 0x42, 0xd9, 0xa5, 0xb5, 0x2e, 0xeb, 0x8b, 0x40, 0x28, 0xca, 0x2e, 0xbb, 0x06, 0x38,
+	0x47, 0xb0, 0x70, 0x46, 0xe7, 0xcf, 0x8b, 0x15, 0x5c, 0x60, 0xd1, 0x05, 0xe6, 0x2e, 0xe2, 0x31,
+	0x17, 0x39, 0x76, 0x76, 0x60, 0xee, 0x58, 0x48, 0xa5, 0x07, 0xd6, 0x45, 0x19, 0x47, 0xa1, 0x44,
+	0xb6, 0x02, 0x55, 0x3d, 0x5c, 0xd2, 0x2e, 0xad, 0x94, 0xd7, 0x9b, 0xdb, 0xb0, 0x49, 0x33, 0x4e,
+	0x21, 0x46, 0x70, 0x5e, 0xc1, 0xec, 0x47, 0x94, 0x92, 0x5f, 0xe0, 0x28, 0xc9, 0x86, 0x7a, 0x46,
+	0x65, 0x9b, 0xe7, 0xd0, 0xd9, 0x02, 0xb6, 0x37, 0xc4, 0xc1, 0xe5, 0x59, 0x28, 0xae, 0xd2, 0x3c,
+	0x81, 0x3d, 0x03, 0x4b, 0xc8, 0x1e, 0x7e, 0x13, 0x52, 0x51, 0x82, 0xe5, 0xd6, 0x85, 0x3c, 0xd0,
+	0xd0, 0xd9, 0x1d, 0x4b, 0x30, 0x67, 0x5b, 0x84, 0xda, 0x20, 0xf2, 0xd3, 0x20, 0xcc, 0xea, 0x67,
+	0x48, 0x9f, 0xf9, 0x9a, 0xfb, 0xe9, 0xe8, 0x7e, 0x08, 0x6c, 0x7f, 0xaf, 0x40, 0x53, 0x3b, 0x3e,
+	0x35, 0xcf, 0x94, 0xad, 0x41, 0x95, 0xee, 0x8b, 0x31, 0x73, 0x9a, 0xe2, 0xe5, 0xb5, 0x0b, 0x27,
+	0x64, 0x1b, 0xd0, 0x3c, 0x44, 0xf5, 0x21, 0xf5, 0x7d, 0x7a, 0x78, 0xff, 0x0b, 0xef, 0x42, 0xb3,
+	0xe0, 0x95, 0xd9, 0x46, 0xba, 0x6f, 0xbf, 0x3d, 0x49, 0x31, 0x9d, 0xd8, 0x81, 0xfa, 0x91, 0xec,
+	0x7a, 0x81, 0x08, 0xd9, 0xac, 0x09, 0x1a, 0x0d, 0xec, 0x23, 0x59, 0xab, 0x00, 0x7b, 0xf4, 0x44,
+	0xc8, 0x46, 0xc1, 0xd2, 0x1d, 0x7b, 0x6b, 0x60, 0xb9, 0xc8, 0x3d, 0x5a, 0xdf, 0x2b, 0x5e, 0x0c,
+	0x5c, 0x05, 0x30, 0x23, 0xf5, 0x68, 0xb9, 0x1d, 0x80, 0x7d, 0x7a, 0x59, 0x93, 0x0b, 0x2e, 0x18,
+	0x62, 0x7c, 0x34, 0xde, 0x80, 0x95, 0xcf, 0x18, 0x7b, 0x6a, 0x42, 0xee, 0x4c, 0x7e, 0x7b, 0x31,
+	0x6b, 0xf2, 0xf8, 0x20, 0xee, 0xc3, 0xcc, 0xdd, 0x39, 0x67, 0xcb, 0x99, 0x99, 0x49, 0xd3, 0xff,
+	0xc0, 0xf6, 0xbb, 0x4b, 0xbf, 0x6e, 0x3b, 0xa5, 0xdf, 0xb7, 0x9d, 0xd2, 0x9f, 0xdb, 0x4e, 0xe9,
+	0xe7, 0xdf, 0xce, 0x93, 0x2f, 0x55, 0xfa, 0xb5, 0xfb, 0x35, 0xfa, 0xb6, 0x5f, 0xff, 0x0b, 0x00,
+	0x00, 0xff, 0xff, 0x59, 0x29, 0xc5, 0xa2, 0xd1, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -714,8 +715,9 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type UserServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*User, error)
-	CheckField(ctx context.Context, in *CheckUser, opts ...grpc.CallOption) (*CheckRes, error)
 	GetFullName(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*User, error)
+	CheckUnique(ctx context.Context, in *CheckUniqueRequest, opts ...grpc.CallOption) (*CheckUniqueRespons, error)
+	IsAdmin(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*CheckUniqueRespons, error)
 	CreateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
 	ReadUser(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*User, error)
 	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
@@ -741,18 +743,27 @@ func (c *userServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
-func (c *userServiceClient) CheckField(ctx context.Context, in *CheckUser, opts ...grpc.CallOption) (*CheckRes, error) {
-	out := new(CheckRes)
-	err := c.cc.Invoke(ctx, "/user.UserService/CheckField", in, out, opts...)
+func (c *userServiceClient) GetFullName(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/user.UserService/GetFullName", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userServiceClient) GetFullName(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*User, error) {
-	out := new(User)
-	err := c.cc.Invoke(ctx, "/user.UserService/GetFullName", in, out, opts...)
+func (c *userServiceClient) CheckUnique(ctx context.Context, in *CheckUniqueRequest, opts ...grpc.CallOption) (*CheckUniqueRespons, error) {
+	out := new(CheckUniqueRespons)
+	err := c.cc.Invoke(ctx, "/user.UserService/CheckUnique", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) IsAdmin(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*CheckUniqueRespons, error) {
+	out := new(CheckUniqueRespons)
+	err := c.cc.Invoke(ctx, "/user.UserService/IsAdmin", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -816,8 +827,9 @@ func (c *userServiceClient) UpdatePassword(ctx context.Context, in *UpdatePasswo
 // UserServiceServer is the server API for UserService service.
 type UserServiceServer interface {
 	Login(context.Context, *LoginRequest) (*User, error)
-	CheckField(context.Context, *CheckUser) (*CheckRes, error)
 	GetFullName(context.Context, *LoginRequest) (*User, error)
+	CheckUnique(context.Context, *CheckUniqueRequest) (*CheckUniqueRespons, error)
+	IsAdmin(context.Context, *IdRequest) (*CheckUniqueRespons, error)
 	CreateUser(context.Context, *User) (*User, error)
 	ReadUser(context.Context, *IdRequest) (*User, error)
 	UpdateUser(context.Context, *User) (*User, error)
@@ -833,11 +845,14 @@ type UnimplementedUserServiceServer struct {
 func (*UnimplementedUserServiceServer) Login(ctx context.Context, req *LoginRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (*UnimplementedUserServiceServer) CheckField(ctx context.Context, req *CheckUser) (*CheckRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckField not implemented")
-}
 func (*UnimplementedUserServiceServer) GetFullName(ctx context.Context, req *LoginRequest) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFullName not implemented")
+}
+func (*UnimplementedUserServiceServer) CheckUnique(ctx context.Context, req *CheckUniqueRequest) (*CheckUniqueRespons, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckUnique not implemented")
+}
+func (*UnimplementedUserServiceServer) IsAdmin(ctx context.Context, req *IdRequest) (*CheckUniqueRespons, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsAdmin not implemented")
 }
 func (*UnimplementedUserServiceServer) CreateUser(ctx context.Context, req *User) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
@@ -880,24 +895,6 @@ func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_CheckField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckUser)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserServiceServer).CheckField(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user.UserService/CheckField",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).CheckField(ctx, req.(*CheckUser))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _UserService_GetFullName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LoginRequest)
 	if err := dec(in); err != nil {
@@ -912,6 +909,42 @@ func _UserService_GetFullName_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).GetFullName(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_CheckUnique_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckUniqueRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).CheckUnique(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.UserService/CheckUnique",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).CheckUnique(ctx, req.(*CheckUniqueRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_IsAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).IsAdmin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.UserService/IsAdmin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).IsAdmin(ctx, req.(*IdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1033,12 +1066,16 @@ var _UserService_serviceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_Login_Handler,
 		},
 		{
-			MethodName: "CheckField",
-			Handler:    _UserService_CheckField_Handler,
-		},
-		{
 			MethodName: "GetFullName",
 			Handler:    _UserService_GetFullName_Handler,
+		},
+		{
+			MethodName: "CheckUnique",
+			Handler:    _UserService_CheckUnique_Handler,
+		},
+		{
+			MethodName: "IsAdmin",
+			Handler:    _UserService_IsAdmin_Handler,
 		},
 		{
 			MethodName: "CreateUser",
@@ -1463,7 +1500,7 @@ func (m *MessageResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *CheckUser) Marshal() (dAtA []byte, err error) {
+func (m *CheckUniqueRespons) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -1473,12 +1510,49 @@ func (m *CheckUser) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *CheckUser) MarshalTo(dAtA []byte) (int, error) {
+func (m *CheckUniqueRespons) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *CheckUser) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *CheckUniqueRespons) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.IsExist {
+		i--
+		if m.IsExist {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *CheckUniqueRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CheckUniqueRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *CheckUniqueRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1494,49 +1568,12 @@ func (m *CheckUser) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.Field) > 0 {
-		i -= len(m.Field)
-		copy(dAtA[i:], m.Field)
-		i = encodeVarintUser(dAtA, i, uint64(len(m.Field)))
+	if len(m.Column) > 0 {
+		i -= len(m.Column)
+		copy(dAtA[i:], m.Column)
+		i = encodeVarintUser(dAtA, i, uint64(len(m.Column)))
 		i--
 		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *CheckRes) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *CheckRes) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CheckRes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Exists {
-		i--
-		if m.Exists {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x8
 	}
 	return len(dAtA) - i, nil
 }
@@ -1748,19 +1785,14 @@ func (m *MessageResponse) Size() (n int) {
 	return n
 }
 
-func (m *CheckUser) Size() (n int) {
+func (m *CheckUniqueRespons) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.Field)
-	if l > 0 {
-		n += 1 + l + sovUser(uint64(l))
-	}
-	l = len(m.Value)
-	if l > 0 {
-		n += 1 + l + sovUser(uint64(l))
+	if m.IsExist {
+		n += 2
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1768,14 +1800,19 @@ func (m *CheckUser) Size() (n int) {
 	return n
 }
 
-func (m *CheckRes) Size() (n int) {
+func (m *CheckUniqueRequest) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	if m.Exists {
-		n += 2
+	l = len(m.Column)
+	if l > 0 {
+		n += 1 + l + sovUser(uint64(l))
+	}
+	l = len(m.Value)
+	if l > 0 {
+		n += 1 + l + sovUser(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2973,7 +3010,7 @@ func (m *MessageResponse) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *CheckUser) Unmarshal(dAtA []byte) error {
+func (m *CheckUniqueRespons) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -2996,15 +3033,86 @@ func (m *CheckUser) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: CheckUser: wiretype end group for non-group")
+			return fmt.Errorf("proto: CheckUniqueRespons: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CheckUser: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: CheckUniqueRespons: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field IsExist", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowUser
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.IsExist = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipUser(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthUser
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CheckUniqueRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowUser
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CheckUniqueRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CheckUniqueRequest: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Field", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Column", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -3032,7 +3140,7 @@ func (m *CheckUser) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Field = string(dAtA[iNdEx:postIndex])
+			m.Column = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
@@ -3066,77 +3174,6 @@ func (m *CheckUser) Unmarshal(dAtA []byte) error {
 			}
 			m.Value = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipUser(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if (skippy < 0) || (iNdEx+skippy) < 0 {
-				return ErrInvalidLengthUser
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *CheckRes) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowUser
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: CheckRes: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: CheckRes: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Exists", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowUser
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.Exists = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipUser(dAtA[iNdEx:])

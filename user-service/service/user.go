@@ -32,6 +32,15 @@ func NewUserService(db *sqlx.DB, log l.Logger) *UserService {
 // 	}
 // }
 
+func (s *UserService) IsAdmin(ctx context.Context, req *pbu.IdRequest) (*pbu.CheckUniqueRespons, error) {
+	check, err := s.storage.User().IsAdminDB(req)
+	if err != nil {
+		s.logger.Error(err.Error())
+		return nil, err
+	}
+	return check, nil
+}
+
 func (s *UserService) Login(ctx context.Context, req *pbu.LoginRequest) (*pbu.User, error) {
 	user, err := s.storage.User().LoginDB(req)
 	if err != nil {

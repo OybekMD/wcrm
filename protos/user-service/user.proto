@@ -7,6 +7,7 @@ service UserService {
   rpc Login(LoginRequest) returns (User);
   rpc GetFullName(LoginRequest) returns (User);
   rpc CheckUnique(CheckUniqueRequest) returns (CheckUniqueRespons);
+  rpc IsAdmin(IdRequest) returns (CheckUniqueRespons);
   
   rpc CreateUser(User) returns (User);
   rpc ReadUser(IdRequest) returns (User);
