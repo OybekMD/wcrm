@@ -9,6 +9,9 @@ help: ## Display available commands.
 run: ## Run currently service
 	go run cmd/main.go
 
+test: ## Tests all test files
+	go test -v ./...
+
 jprq: ## Run api in JPRQ server
 	jprq http 8090 -s wcrm
 

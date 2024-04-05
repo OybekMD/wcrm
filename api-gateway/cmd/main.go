@@ -5,6 +5,10 @@ import (
 	"api-gateway/config"
 	"api-gateway/pkg/logger"
 	"api-gateway/services"
+	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/casbin/casbin/v2"
 	fileadapter "github.com/casbin/casbin/v2/persist/file-adapter"
@@ -19,7 +23,7 @@ func main() {
 		log.Error("gRPC dial error", logger.Error(err))
 	}
 
-	// With csv file code 
+	// With csv file code
 	fileAdapter := fileadapter.NewAdapter("./config/auth.csv")
 
 	enforcer, err := casbin.NewEnforcer("./config/auth.conf", fileAdapter)
@@ -35,8 +39,18 @@ func main() {
 		ServiceManager: serviceManager,
 	})
 
-	if err := server.Run(cfg.HTTPPort); err != nil {
-		log.Fatal("failed to run http server", logger.Error(err))
-		panic(err)
-	}
+	go func() {
+		if err := server.Run(cfg.HTTPPort); err != nil {
+			log.Fatal("failed to run http server", logger.Error(err))
+			panic(err)
+		}
+	}()
+
+	fmt.Println("\x1b[32mWRCM Started\x1b[0m")
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	fmt.Println("\x1b[32mWRCM Graceful Shutting Down\x1b[0m")
 }
