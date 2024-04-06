@@ -66,6 +66,29 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 		h.log.Error("failed to create user", l.Error(err))
 		return
 	}
+
+	puser := models.User{
+		Id: response.Id,
+		FirstName: response.FirstName,
+		LastName: response.LastName,
+		Username: response.Username,
+		PhoneNumber: response.PhoneNumber,
+		Bio: response.Bio,
+		BirthDay: response.BirthDay,
+		Email: response.Email,
+		Avatar: response.Avatar,
+		Password: response.Password,
+		RefreshToken: response.RefreshToken,
+		CreatedAt: response.CreatedAt,
+		UpdatedAt: response.UpdatedAt,
+	}
+	if err := h.producer.ProduceUser(ctx, "post", puser); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to product post", l.Error(err))
+		return
+	}
 	// response.RefreshToken = refresh
 	c.JSON(http.StatusCreated, response)
 }

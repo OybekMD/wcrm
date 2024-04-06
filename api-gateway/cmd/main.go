@@ -3,8 +3,10 @@ package main
 import (
 	"api-gateway/api"
 	"api-gateway/config"
+	"api-gateway/pkg/kafka"
 	"api-gateway/pkg/logger"
 	"api-gateway/services"
+	"fmt"
 
 	"github.com/casbin/casbin/v2"
 	fileadapter "github.com/casbin/casbin/v2/persist/file-adapter"
@@ -28,13 +30,17 @@ func main() {
 		return
 	}
 
+	kafkaProducer := kafka.NewProducerInit(cfg, log)
+
 	server := api.New(api.Option{
 		Conf:           cfg,
 		Logger:         log,
 		Enforcer:       enforcer,
 		ServiceManager: serviceManager,
+		Produce:        kafkaProducer,
 	})
 
+	fmt.Println("\n\x1b[34mWRCM Server Run!\x1b[0m\n")
 	if err := server.Run(cfg.HTTPPort); err != nil {
 		log.Fatal("failed to run http server", logger.Error(err))
 		panic(err)

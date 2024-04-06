@@ -6,6 +6,16 @@ import (
 	"github.com/spf13/cast"
 )
 
+type Kafka struct {
+	Address            string
+	UserCreateTopic    string
+	CategoryCreateTopic string
+	CategoryIconCreateTopic string
+	ProductCreateTopic string
+	OrderproductCreateTopic string
+	CommentCreateTopic string
+}
+
 // Config ...
 type Config struct {
 	Environment string // develop, staging, production
@@ -30,13 +40,17 @@ type Config struct {
 	CSVFilePath    string
 
 	// Redis
-	RedisHost  string
-	RedisPort  int
+	RedisHost string
+	RedisPort int
 
 	LogLevel string
 	HTTPPort string
 	HTTPHost string
 
+	// Kafka
+	Kafka Kafka
+
+	// JWT
 	SignInKey          string
 	AccessTokenTimeout int
 }
@@ -78,6 +92,11 @@ func Load() Config {
 
 	// Contex timeout
 	c.CtxTimeout = cast.ToInt(getOrReturnDefault("CTX_TIMEOUT", 7))
+
+	// Kafka
+	c.Kafka.Address = cast.ToString(getOrReturnDefault("KAFKA_ADDRESS", "localhost:9092"))
+	c.Kafka.ProductCreateTopic = cast.ToString(getOrReturnDefault("PRODUCT_CREATE_TOPIC", "product.create"))
+	c.Kafka.UserCreateTopic = cast.ToString(getOrReturnDefault("USER_CREATE_TOPIC", "user.create"))
 
 	return c
 }
