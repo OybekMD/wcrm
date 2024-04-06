@@ -3,15 +3,16 @@ package v1
 import (
 	"api-gateway/api/handlers/models"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-// @Security      ApiKeyAuth
 // @Summary       Get list of policeis
 // @Description   This API get list of policies
+// @Security      BearerAuth
 // @Tags          casbin
 // @Accept        json
 // @Produce       json
@@ -35,9 +36,9 @@ func (h *handlerV1) ListPolicies(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, resp)
 }
 
-// @Security      ApiKeyAuth
 // @Summary       Get list of roles
 // @Description   This API get list of roles
+// @Security      BearerAuth
 // @Tags          casbin
 // @Accept        json
 // @Produce       json
@@ -48,13 +49,14 @@ func (h *handlerV1) ListPolicies(ctx *gin.Context) {
 // @Failure       500 {object} models.Error
 // @Router        /v1/rbac/roles [GET]
 func (h *handlerV1) ListRoles(ctx *gin.Context) {
+	fmt.Println("entered!")
 	resp := h.enforcer.GetAllRoles()
 	ctx.JSON(http.StatusOK, resp)
 }
 
-// @Security	ApiKeyAuth
 // @Summary		Create new user role
 // @Description	Create new user role
+// @Security	BearerAuth
 // @Tags        casbin
 // @Accept     	json
 // @Produce     json

@@ -58,6 +58,11 @@ func New(option Option) *gin.Engine {
 
 	router.Use(middleware.NewAuthorizer(option.Enforcer, jwtHandler, option.Conf))
 	api := router.Group("/v1")
+	
+	// Casbin role
+	api.GET("/rbac/roles", handlerV1.ListRoles)
+	api.GET("/rbac/list-role-policies", handlerV1.ListPolicies)
+	api.POST("/rbac/add-user-role", handlerV1.CreateRole)
 
 	// Registration
 	api.POST("/login", handlerV1.Login)
@@ -74,11 +79,11 @@ func New(option Option) *gin.Engine {
 	api.GET("/users", handlerV1.ListUsers)
 
 	// CategoryIcon
-	api.POST("/categoryicon", handlerV1.CreateCategory)
-	api.GET("/categoryicon/:id", handlerV1.ReadCategory)
-	api.PUT("/categoryicon/:id", handlerV1.UpdateCategory)
-	api.DELETE("/categoryicon/:id", handlerV1.DeleteCategory)
-	api.GET("/categoryicons", handlerV1.ListCategorys)
+	api.POST("/categoryicon", handlerV1.CreateCategoryIcon)
+	api.GET("/categoryicon/:id", handlerV1.ReadCategoryIcon)
+	api.PUT("/categoryicon/:id", handlerV1.UpdateCategoryIcon)
+	api.DELETE("/categoryicon/:id", handlerV1.DeleteCategoryIcon)
+	api.GET("/categoryicons", handlerV1.ListCategoryIcons)
 
 	// Category
 	api.POST("/category", handlerV1.CreateCategory)
@@ -95,19 +100,19 @@ func New(option Option) *gin.Engine {
 	api.GET("/products", handlerV1.ListProducts)
 	api.GET("/listproductwithcomments", handlerV1.ListProductWithComment)
 
-	// Orderproduct Not yet
+	// Orderproduct
 	api.POST("/orderproduct", handlerV1.CreateOrderproduct)
 	api.GET("/orderproduct/:id", handlerV1.ReadOrderproduct)
 	api.PUT("/orderproduct/:id", handlerV1.UpdateOrderproduct)
 	api.DELETE("/orderproduct/:id", handlerV1.DeleteOrderproduct)
 	api.GET("/orderproducts", handlerV1.ListOrderproducts)
 
-	// Comment Not yet
-	api.POST("/comment", handlerV1.CreateProduct)
-	api.GET("/comment/:id", handlerV1.ReadProduct)
-	api.PUT("/comment/:id", handlerV1.UpdateProduct)
-	api.DELETE("/comment/:id", handlerV1.DeleteProduct)
-	api.GET("/comments", handlerV1.ListProducts)
+	// Comment
+	api.POST("/comment", handlerV1.CreateComment)
+	api.GET("/comment/:id", handlerV1.ReadComment)
+	api.PUT("/comment", handlerV1.UpdateComment)
+	api.DELETE("/comment/:id", handlerV1.DeleteComment)
+	api.GET("/comments", handlerV1.ListComments)
 	api.GET("/commentsbyproductid", handlerV1.ListCommentsByProductId)
 
 	// Fileup

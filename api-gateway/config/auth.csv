@@ -15,7 +15,7 @@ p, user, /v1/users, GET
 
 p, user, /v1/comment, POST
 p, user, /v1/comment/:id, GET
-p, user, /v1/comment/:id, PUT
+p, user, /v1/comment, PUT
 p, user, /v1/comment/:id, DELETE
 p, user, /v1/comments, GET
 p, user, /v1/commentsbyproductid, GET
@@ -57,7 +57,7 @@ p, admin, /v1/orderproducts, GET
 
 p, admin, /v1/comment, POST
 p, admin, /v1/comment/:id, GET
-p, admin, /v1/comment/:id, PUT
+p, admin, /v1/comment, PUT
 p, admin, /v1/comment/:id, DELETE
 p, admin, /v1/comments, GET
 p, admin, /v1/commentsbyproductid, GET
@@ -67,5 +67,12 @@ p, admin, /v1/imageupload, POST
 p, admin, /v1/soundupload, POST
 p, admin, /v1/videoupload, POST
 
-p, superAdmin, /v1/*, (GET)|(POST)|(DELETE)|(PUT)
+
+p, admin, /v1/rbac/roles, GET
+p, admin, /v1/rbac/list-role-policies, GET
+p, admin, /v1/rbac/add-user-role, POST
+
+
+g, admin, user,
 g, superAdmin, admin,
+p, superAdmin, /v1/*, (GET)|(POST)|(DELETE)|(PUT)

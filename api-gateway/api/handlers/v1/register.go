@@ -117,8 +117,7 @@ func (h *handlerV1) Login(c *gin.Context) {
 		})
 		h.log.Error(err.Error())
 		return
-	}
-	
+	}	
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
@@ -128,7 +127,7 @@ func (h *handlerV1) Login(c *gin.Context) {
 		Password: body.Password,
 	})
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "User not found!"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Email or Password wrong!"})
 		h.log.Error(err.Error())
 		return
 	}

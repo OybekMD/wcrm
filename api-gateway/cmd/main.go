@@ -5,10 +5,6 @@ import (
 	"api-gateway/config"
 	"api-gateway/pkg/logger"
 	"api-gateway/services"
-	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/casbin/casbin/v2"
 	fileadapter "github.com/casbin/casbin/v2/persist/file-adapter"
@@ -39,18 +35,24 @@ func main() {
 		ServiceManager: serviceManager,
 	})
 
-	go func() {
-		if err := server.Run(cfg.HTTPPort); err != nil {
-			log.Fatal("failed to run http server", logger.Error(err))
-			panic(err)
-		}
-	}()
+	if err := server.Run(cfg.HTTPPort); err != nil {
+		log.Fatal("failed to run http server", logger.Error(err))
+		panic(err)
+	}
 
-	fmt.Println("\x1b[32mWRCM Started\x1b[0m")
+	// Graceful Shuttingdown
+	// go func() {
+	// 	if err := server.Run(cfg.HTTPPort); err != nil {
+	// 		log.Fatal("failed to run http server", logger.Error(err))
+	// 		panic(err)
+	// 	}
+	// }()
 
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
-	<-quit
+	// fmt.Println("\x1b[32mWRCM Started\x1b[0m")
 
-	fmt.Println("\x1b[32mWRCM Graceful Shutting Down\x1b[0m")
+	// quit := make(chan os.Signal, 1)
+	// signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	// <-quit
+
+	// fmt.Println("\x1b[32mWRCM Graceful Shutting Down\x1b[0m")
 }
