@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	pbp "post-service/genproto/post"
 	pbc "post-service/genproto/comment"
+	pbp "post-service/genproto/post"
 	l "post-service/pkg/logger"
 	grpcClient "post-service/service/grpc_client"
 	"post-service/storage"
@@ -165,24 +165,30 @@ func (s *PostService) ListProducts(ctx context.Context, req *pbp.GetAllRequest) 
 	return products, nil
 }
 func (s *PostService) ListProductsWithComments(ctx context.Context, req *pbp.GetAllRequest) (*pbp.ListProductWithCommentResponse, error) {
-	var productsWithComments pbp.ListProductWithCommentResponse
+	// var productsWithComments pbp.ListProductWithCommentResponse
 	products, err := s.storage.Post().ListProductsWithCommentsDB(req)
 	if err != nil {
 		return nil, err
 	}
 
-	for _, k := range products.Productwithcomments {
-		var pwd pbp.ProductWithComment
-		// var listComment pbc.ListCommentResponse
+	for v, k := range products.Productwithcomments {
 		strid := strconv.Itoa(int(k.Id))
+
 		comments, err := s.client.CommentService().ListCommentsByProductId(ctx, &pbc.IdRequest{Id: strid})
 		if err != nil {
 			return nil, err
 		}
 		for _, j := range comments.Comments {
-			pwd.Comments = append(pwd.Comments, (*pbp.Comment)(j))
+			productComment := pbp.Comment{
+				Id:        j.Id,
+				Content:   j.Content,
+				UserId:    j.UserId,
+				ProductId: j.ProductId,
+				CreatedAt: j.CreatedAt,
+				UpdatedAt: j.UpdatedAt,
+			}
+			products.Productwithcomments[v].Comments = append(products.Productwithcomments[v].Comments, &productComment)
 		}
-		productsWithComments.Productwithcomments = append(productsWithComments.Productwithcomments, &pwd)
 	}
 	return products, nil
 }

@@ -3,6 +3,7 @@ package v1
 import (
 	"context"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,7 @@ import (
 
 	models "api-gateway/api/handlers/models"
 	pbc "api-gateway/genproto/comment"
+	"api-gateway/kafka"
 	l "api-gateway/pkg/logger"
 	"api-gateway/pkg/utils"
 )
@@ -58,6 +60,19 @@ func (h *handlerV1) CreateComment(c *gin.Context) {
 		h.log.Error("failed to create Comment", l.Error(err))
 		return
 	}
+
+	if err := kafka.ProduceComment(ctx, body.UserId, models.Comment{
+		Content:   body.Content,
+		UserId:    body.UserId,
+		ProductId: body.ProductId,
+	}); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
+		return
+	}
+
 	c.JSON(http.StatusCreated, response)
 }
 
@@ -133,6 +148,19 @@ func (h *handlerV1) UpdateComment(c *gin.Context) {
 			"error": err.Error(),
 		})
 		h.log.Error("failed to update Comment", l.Error(err))
+		return
+	}
+
+	ucomment := models.Comment{
+		Id:      body.Id,
+		Content: body.Content,
+	}
+
+	if err := kafka.ProduceComment(ctx, strconv.Itoa(int(body.Id)), ucomment); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
 		return
 	}
 

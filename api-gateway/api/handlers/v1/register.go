@@ -5,6 +5,7 @@ import (
 	token "api-gateway/api/tokens"
 	"api-gateway/config"
 	pbu "api-gateway/genproto/user"
+	"api-gateway/kafka"
 	"api-gateway/pkg/etc"
 	l "api-gateway/pkg/logger"
 	"context"
@@ -197,6 +198,9 @@ func (h *handlerV1) Verification(c *gin.Context) {
 		return
 	}
 
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
+	defer cancel()
+
 	userdetail, err := etc.GetRedis(body.Code)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -258,7 +262,7 @@ func (h *handlerV1) Verification(c *gin.Context) {
 	}
 
 	response := &models.UserResponse{
-		Id:           uuid.New().String(),
+		Id:           createdUser.Id,
 		FirstName:    userdetail.FirstName,
 		LastName:     userdetail.LastName,
 		Email:        userdetail.Email,
@@ -267,6 +271,26 @@ func (h *handlerV1) Verification(c *gin.Context) {
 		RefreshToken: refresh,
 		CreatedAt:    createdUser.CreatedAt,
 		UpdatedAt:    createdUser.UpdatedAt,
+	}
+
+	cuser := &models.User{
+		Id:           createdUser.Id,
+		FirstName:    userdetail.FirstName,
+		LastName:     userdetail.LastName,
+		Email:        userdetail.Email,
+		Password:     hashPassword,
+		AccessToken:  access,
+		RefreshToken: refresh,
+		CreatedAt:    createdUser.CreatedAt,
+		UpdatedAt:    createdUser.UpdatedAt,
+	}
+
+	if err := kafka.ProduceUser(ctx, response.Id, *cuser); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
+		return
 	}
 
 	c.JSON(http.StatusOK, response)

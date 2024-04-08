@@ -39,7 +39,7 @@ func Load() Config {
 
 	// connect to Comment-service
 	c.CommentServiceHost = cast.ToString(getOrReturnDefault("COMMENT_SERVICE_HOST", "localhost"))
-	c.CommentServicePort = cast.ToInt(getOrReturnDefault("COMMENT_SERVICE_HOST", "2222"))
+	c.CommentServicePort = cast.ToInt(getOrReturnDefault("COMMENT_SERVICE_HOST", "3330"))
 
 	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "debug"))
 

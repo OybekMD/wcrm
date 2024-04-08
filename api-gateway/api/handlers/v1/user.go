@@ -6,10 +6,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"google.golang.org/protobuf/encoding/protojson"
 
 	models "api-gateway/api/handlers/models"
 	pbu "api-gateway/genproto/user"
+	"api-gateway/kafka"
 	l "api-gateway/pkg/logger"
 	"api-gateway/pkg/utils"
 )
@@ -44,6 +46,10 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(h.cfg.CtxTimeout))
 	defer cancel()
 
+	if body.Id == "" {
+		body.Id = uuid.New().String()
+	}
+
 	response, err := h.serviceManager.UserService().CreateUser(ctx, &pbu.User{
 		Id:           body.Id,
 		FirstName:    body.FirstName,
@@ -67,28 +73,14 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 		return
 	}
 
-	puser := models.User{
-		Id: response.Id,
-		FirstName: response.FirstName,
-		LastName: response.LastName,
-		Username: response.Username,
-		PhoneNumber: response.PhoneNumber,
-		Bio: response.Bio,
-		BirthDay: response.BirthDay,
-		Email: response.Email,
-		Avatar: response.Avatar,
-		Password: response.Password,
-		RefreshToken: response.RefreshToken,
-		CreatedAt: response.CreatedAt,
-		UpdatedAt: response.UpdatedAt,
-	}
-	if err := h.producer.ProduceUser(ctx, "post", puser); err != nil {
+	if err := kafka.ProduceUser(ctx, body.Id, body); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
-		h.log.Error("failed to product post", l.Error(err))
+		h.log.Error("failed to create user", l.Error(err))
 		return
 	}
+
 	// response.RefreshToken = refresh
 	c.JSON(http.StatusCreated, response)
 }
@@ -97,7 +89,9 @@ func (h *handlerV1) CreateUser(c *gin.Context) {
 //
 //	@Summary		GetUser
 //	@Description	Api for getting user by id
+//
 // @Security    BearerAuth
+//
 //	@Tags			user
 //	@Accept			json
 //	@Produce		json
@@ -170,6 +164,26 @@ func (h *handlerV1) UpdateUser(c *gin.Context) {
 		return
 	}
 
+	ruser := models.User{
+		Id:          body.Id,
+		FirstName:   body.FirstName,
+		LastName:    body.LastName,
+		Username:    body.Username,
+		PhoneNumber: body.PhoneNumber,
+		Bio:         body.Bio,
+		BirthDay:    body.BirthDay,
+		Email:       body.Email,
+		Avatar:      body.Avatar,
+	}
+
+	if err := kafka.ProduceUser(ctx, response.Id, ruser); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to update user", l.Error(err))
+		return
+	}
+
 	c.JSON(http.StatusOK, response)
 }
 
@@ -221,7 +235,7 @@ func (h *handlerV1) DeleteUser(c *gin.Context) {
 // @Succes 200 {object} models.Users
 // @Failure 400 {object} models.StandardErrorModel
 // @Failure 500 {object} models.StandardErrorModel
-// @Router /v1/users/ [get]
+// @Router /v1/users [get]
 func (h *handlerV1) ListUsers(c *gin.Context) {
 
 	queryParams := c.Request.URL.Query()

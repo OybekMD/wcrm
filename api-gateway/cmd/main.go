@@ -3,8 +3,9 @@ package main
 import (
 	"api-gateway/api"
 	"api-gateway/config"
-	"api-gateway/pkg/kafka"
+	"api-gateway/kafka"
 	"api-gateway/pkg/logger"
+	k "api-gateway/pkg/kafka"
 	"api-gateway/services"
 	"fmt"
 
@@ -30,14 +31,13 @@ func main() {
 		return
 	}
 
-	kafkaProducer := kafka.NewProducerInit(cfg, log)
+	kafka.Init(k.NewProducerInit(cfg, log))
 
 	server := api.New(api.Option{
 		Conf:           cfg,
 		Logger:         log,
 		Enforcer:       enforcer,
 		ServiceManager: serviceManager,
-		Produce:        kafkaProducer,
 	})
 
 	fmt.Println("\n\x1b[34mWRCM Server Run!\x1b[0m\n")

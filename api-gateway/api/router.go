@@ -5,7 +5,7 @@ import (
 	v1 "api-gateway/api/handlers/v1"
 	"api-gateway/api/middleware"
 	token "api-gateway/api/tokens"
-	"api-gateway/kafka"
+	// "api-gateway/kafka"
 
 	"api-gateway/config"
 	"api-gateway/pkg/logger"
@@ -25,7 +25,6 @@ type Option struct {
 	Logger         logger.Logger
 	ServiceManager services.IServiceManager
 	Enforcer       *casbin.Enforcer
-	Produce         kafka.ProduceMessages
 }
 
 // @title WCRM User

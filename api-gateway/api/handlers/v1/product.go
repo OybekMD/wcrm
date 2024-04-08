@@ -11,6 +11,7 @@ import (
 
 	models "api-gateway/api/handlers/models"
 	pbp "api-gateway/genproto/post"
+	"api-gateway/kafka"
 	l "api-gateway/pkg/logger"
 	"api-gateway/pkg/utils"
 )
@@ -59,6 +60,15 @@ func (h *handlerV1) CreateProduct(c *gin.Context) {
 		h.log.Error("failed to create Product", l.Error(err))
 		return
 	}
+
+	if err := kafka.ProduceProduct(ctx, strconv.Itoa(int(body.Id)), body); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
+		return
+	}
+	
 	c.JSON(http.StatusCreated, response)
 }
 
@@ -142,6 +152,22 @@ func (h *handlerV1) UpdateProduct(c *gin.Context) {
 			"error": err.Error(),
 		})
 		h.log.Error("failed to update Product", l.Error(err))
+		return
+	}
+
+	uproduct := models.Product{
+		Id: body.Id,
+		Title: body.Title,
+		Description: body.Description,
+		Price: body.Price,
+		Picture: body.Picture,
+	}
+
+	if err := kafka.ProduceProduct(ctx, strconv.Itoa(int(body.Id)), uproduct); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
 		return
 	}
 

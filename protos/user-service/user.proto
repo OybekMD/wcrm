@@ -31,7 +31,6 @@ message User {
   string refresh_token = 11;
   string created_at = 12;
   string updated_at = 13;
-  string deleted_at = 14;
 }
 
 

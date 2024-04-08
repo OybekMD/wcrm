@@ -3,6 +3,7 @@ package v1
 import (
 	"context"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,7 @@ import (
 
 	models "api-gateway/api/handlers/models"
 	pbp "api-gateway/genproto/post"
+	"api-gateway/kafka"
 	l "api-gateway/pkg/logger"
 	"api-gateway/pkg/utils"
 )
@@ -57,6 +59,15 @@ func (h *handlerV1) CreateCategory(c *gin.Context) {
 		h.log.Error("failed to create Category", l.Error(err))
 		return
 	}
+
+	if err := kafka.ProduceCategory(ctx, strconv.Itoa(int(body.Id)), body); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
+		return
+	}
+
 	c.JSON(http.StatusCreated, response)
 }
 
@@ -129,6 +140,20 @@ func (h *handlerV1) UpdateCategory(c *gin.Context) {
 			"error": err.Error(),
 		})
 		h.log.Error("failed to update Category", l.Error(err))
+		return
+	}
+
+	ucategory := models.Category{
+		Id: body.Id,
+		Name: body.Name,
+		IconId: body.IconId,
+	}
+
+	if err := kafka.ProduceCategory(ctx, strconv.Itoa(int(body.Id)), ucategory); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		h.log.Error("failed to create user", l.Error(err))
 		return
 	}
 
